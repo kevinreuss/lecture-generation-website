@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reverse Proxy Configuration with NGINX</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Reverse Proxy Configuration with NGINX
+
+NGINX can be configured as a powerful reverse proxy. A reverse proxy accepts client requests, forwards them to an appropriate backend server, and returns the server's response back to the client, providing a level of abstraction and control to ensure the smooth flow of network traffic between clients and servers.
+
+## Key NGINX Configuration Details
+
+The main configuration file for NGINX typically resides at `/etc/nginx/nginx.conf`. Here, you can define how NGINX should handle incoming requests and where they should be forwarded.
+
+For example:
+
+```nginx
+location / {
+    proxy_pass http://backend_server;
+}
+```
+
+The `proxy_pass` directive is critical. It informs NGINX to pass requests for this location to the backend server specified.
+
+## Full Configuration Example
+
+Here’s a full example of what an NGINX configuration file might look like for a reverse proxy setup:
+
+```nginx
+http {
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://backend_server;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+    }
+}
+```
+
+In this example, any HTTP request arriving on port 80 will be forwarded to `http://backend_server`. The `proxy_set_header` directives allow you to modify the HTTP headers that will be forwarded to the backend server.
+
+## Load Balancing
+
+NGINX can also provide load balancing capabilities:
+
+```nginx
+http {
+    upstream backend {
+        server backend1.example.com;
+        server backend2.example.com;
+    }
+
+    server {
+        listen 80;
+
+        location / {
+            proxy_pass http://backend;
+        }
+    }
+}
+```
+In this configuration, NGINX will distribute incoming requests to either `backend1.example.com` or `backend2.example.com` in a round-robin fashion.
+
+Remember, the reverse proxy configuration can greatly enhance the performance, scalability, and security of your web applications. Always review your configurations to ensure they meet your specific requirements. 
+
+Happy configuring!
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

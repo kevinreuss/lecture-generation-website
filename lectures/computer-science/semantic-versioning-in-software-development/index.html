@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Semantic Versioning in Software Development</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Semantic Versioning in Software Development
+
+Semantic versioning, often abbreviated as SemVer, is a versioning scheme for software that aims to convey meaning about the underlying changes in a release.
+
+A typical semantic version number has the format `MAJOR.MINOR.PATCH`:
+
+- `MAJOR` version increment indicates incompatible API changes.
+- `MINOR` version increment indicates addition of functionality in a backward-compatible manner.
+- `PATCH` version increment indicates backward-compatible bug fixes.
+
+### Example
+
+Consider a software package with version `2.3.5`. If a new release of the software fixes a bug without changing the software's API, the version number becomes `2.3.6`. If the release adds a new feature but doesn't alter the existing API, the version number becomes `2.4.0`. If the release modifies the API, the version number becomes `3.0.0`.
+
+### Pre-release Versions
+
+Semantic versioning also supports pre-release versions and build metadata. A hyphen `-` or a plus sign `+` can be added after the PATCH version.
+
+For example, a pre-release version may look like `1.0.0-alpha` or `1.0.0-alpha.1`. Pre-release versions indicate that the version is unstable and may not satisfy the intended compatibility requirements.
+
+Build metadata may appear like `1.0.0+20130313144700` where the build metadata (`20130313144700`) provides additional information but does not affect version precedence.
+
+### Semantic Versioning with Git
+
+In Git, semantic versioning can be managed using tags. Here's how to tag your commits with a semantic version:
+
+```bash
+git tag -a "v1.0.0" -m "First stable release"
+git push origin v1.0.0
+```
+
+This will create a tag named `v1.0.0` with the message "First stable release" and push the tag to the repository.
+
+Semantic versioning is a clear and rigid system for versioning but it's not the only one. The key is to pick a system that matches the project’s development and release cycle, and to be consistent with it.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Constraint Satisfaction Problems (CSP)</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Constraint Satisfaction Problems (CSP)
+
+Constraint Satisfaction Problems (CSP) are mathematical problems defined as a set of objects whose state must satisfy a number of constraints or restrictions. CSPs represent the entities in a problem as a homogeneous collection of finite constraints over variables, which is to say, a collection of restrictions on possible values of variables.
+
+In the realm of software engineering and AI, CSPs often occur in scheduling, configuration, and scene labeling problems.
+
+For example, consider the Sudoku puzzle, a classic example of CSP. Here, the variables are the cells, the domain is numbers 1 to 9, and the constraints require each row, column, and box to contain all numbers 1 to 9.
+
+```python
+# Python code using constraint module to solve Sudoku
+from constraint import Problem
+
+def solve_sudoku(puzzle):
+    problem = Problem()
+
+    # Add variables
+    for row in range(9):
+        problem.addVariables(range(row*9, (row+1)*9), range(1, 10))
+
+    # Add row constraints
+    for row in range(9):
+        problem.addConstraint(AllDifferentConstraint(), range(row*9, (row+1)*9))
+
+    # Add column constraints
+    for col in range(9):
+        problem.addConstraint(AllDifferentConstraint(), range(col, 81, 9))
+
+    # Add box constraints
+    for boxRow in range(3):
+        for boxCol in range(3):
+            oneBox = [9*(boxRow*3+i)+boxCol*3+j for i in range(3) for j in range(3)]
+            problem.addConstraint(AllDifferentConstraint(), oneBox)
+
+    # Add given number constraints
+    for index in range(81):
+        if puzzle[index] is not None:
+            problem.addConstraint(lambda x, val=puzzle[index]: x == val, (index,))
+
+    # Get solutions
+    solutions = problem.getSolutions()
+
+    # Return the first solution
+    return solutions[0] if solutions else None
+```
+
+This Python code uses the constraint module to define the problem. It defines the variables (cells) and their domains (numbers 1 to 9), then adds constraints for rows, columns, and boxes. The `getSolutions()` method is then called to find solutions that satisfy all these constraints.
+
+If we apply this to a Sudoku puzzle, the CSP solver will fill in all the cells satisfying all constraints, thereby solving the Sudoku. 
+
+CSPs provide a standardized way of stating problems that allows us to separate problem specification (what we are trying to achieve) from the solving strategy (how to achieve it). That's one reason why CSPs are so popular in AI and many other fields of software engineering.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

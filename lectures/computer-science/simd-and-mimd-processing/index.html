@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>SIMD and MIMD Processing</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# SIMD and MIMD Processing
+
+`SIMD` (Single Instruction, Multiple Data) and `MIMD` (Multiple Instruction, Multiple Data) are two types of parallel computing architectures.
+
+## SIMD
+
+In `SIMD`, a single instruction operates on multiple data points simultaneously. It's frequently used in vector and matrix operations. Modern CPUs include SIMD instruction sets such as Intel's SSE and AVX, or ARM's NEON.
+
+Here's an example with pseudocode:
+
+```pseudo
+SIMD_Vector a = {1, 2, 3, 4}
+SIMD_Vector b = {5, 6, 7, 8}
+SIMD_Vector c = a + b  // {6, 8, 10, 12}
+```
+
+Each operation corresponds to a single instruction executed in parallel on multiple data points.
+
+## MIMD
+
+`MIMD` architecture allows multiple processors to execute different instructions on different data. It's the most utilized architecture in parallel computing, used in multiple-core processors and distributed systems.
+
+Here's an example with pseudocode:
+
+```pseudo
+Processor_1:
+    data_1 = {1, 2, 3}
+    result_1 = process(data_1)  // process is a specific function
+
+Processor_2:
+    data_2 = {4, 5, 6}
+    result_2 = process(data_2)
+```
+
+Each processor can execute different instructions on different data independently.
+
+The main difference between `SIMD` and `MIMD` is that `SIMD` requires data to be in lockstep under a single instruction, whereas `MIMD` allows separate processes to run on any data independently.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

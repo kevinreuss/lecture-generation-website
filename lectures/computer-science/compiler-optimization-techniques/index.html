@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Compiler Optimization Techniques</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Compiler Optimization Techniques
+
+## Loop Optimization
+
+Loop optimization is a common technique that can greatly reduce execution time. Loop unrolling, for instance, removes the overhead of loop control instructions by replicating the loop body. For example:
+
+```cpp
+for (int i = 0; i < 10; i++) { foo(); }
+```
+
+Becomes:
+
+```cpp
+foo(); foo(); foo(); foo(); foo(); foo(); foo(); foo(); foo(); foo();
+```
+
+## Constant Folding
+
+Constant folding simplifies known constants at compile-time. For example:
+
+```cpp
+int x = 7 * 6;
+```
+
+The compiler optimizes this to:
+
+```cpp
+int x = 42;
+```
+
+## Dead Code Elimination
+
+Dead code, or code that doesn't affect the program's outcome, is removed by this optimization.
+
+```cpp
+int x = compute(); // compute is complex function
+x = 10;
+```
+
+The compiler can eliminate the call to `compute()`, as its result isn't used.
+
+## Function Inlining
+
+Function inlining aims to eliminate the overhead of function calls by replacing calls with the function's content.
+
+```cpp
+void foo() { /*...*/ }
+void bar() { foo(); }
+```
+
+Becomes:
+
+```cpp
+void bar() { /* content of foo */ }
+```
+
+## Strength Reduction
+
+This technique replaces expensive operations with equivalent cheaper ones. For example, multiplication by a power of two can be replaced by a left shift operation.
+
+```cpp
+int x = y * 2;
+```
+
+Becomes:
+
+```cpp
+int x = y << 1;
+```
+
+Remember, the goal of these techniques is to improve performance, but they also increase the complexity of the compiled code. Hence, they should be utilized judiciously.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hashing Algorithms: MD5, SHA-256</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Hashing Algorithms: MD5, SHA-256
+
+## MD5
+
+MD5 (Message Digest Algorithm 5) is a widely used cryptographic hash function that produces a 128-bit (16-byte) hash value. It is commonly used to verify data integrity.
+
+MD5 is considered to be a weak hash function as it has known vulnerabilities.
+
+```python
+import hashlib
+
+def md5_hash(input_string):
+    return hashlib.md5(input_string.encode()).hexdigest()
+
+print(md5_hash("Hello, World!"))  # Outputs: '65a8e27d8879283831b664bd8b7f0ad4'
+```
+
+This function will hash the string "Hello, World!" and output the MD5 hash.
+
+## SHA-256
+
+SHA-256 (Secure Hash Algorithm 256 bit) is part of the SHA-2 family. It is a stronger hash function compared to MD5, providing a greater level of security. It generates an almost-unique 256-bit (32-byte) signature for a text.
+
+```python
+def sha256_hash(input_string):
+    return hashlib.sha256(input_string.encode()).hexdigest()
+
+print(sha256_hash("Hello, World!"))  # Outputs: '315f5bdb76d078c43b8ac0064e4a0164612b1fce77c869345bfc94c75894edd3'
+```
+
+This function will hash the string "Hello, World!" and output the SHA-256 hash.
+
+Keep in mind, while SHA-256 is more secure than MD5, no hash function is impervious. The security of a hash function largely depends on its ability to produce unique hashes; if two different inputs produce the same hash (a collision), it opens the potential for nefarious activity. 
+
+For this reason, developing and maintaining robust, secure hashing algorithms is a dynamic and ongoing field of study in cryptography.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

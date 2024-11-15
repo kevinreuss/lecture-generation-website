@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Event-Driven Architecture</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Event-Driven Architecture
+
+Event-Driven Architecture (EDA) is a model where the flow of the program is determined by events such as user actions, sensor outputs, or messages from other programs.
+
+In EDA, there are three main components: Event Creators, Event Managers, and Event Consumers.
+
+1. **Event Creators**: They generate events and publish them to the Event Manager. An event could be a simple JavaScript click event:
+
+```javascript
+button.addEventListener('click', event => {
+  // This is where you'd put the code for the event
+});
+```
+This code snippet attaches an event listener to a button, and when the button is clicked, an event is created.
+
+2. **Event Managers**: They receive events and route them to the appropriate event consumers. For instance, an event bus can act as an event manager:
+
+```javascript
+class EventBus {
+  constructor() {
+    this.subscriptions = {};
+  }
+
+  subscribe(eventType, callback) {
+    this.subscriptions[eventType] = callback;
+  }
+
+  publish(event) {
+    this.subscriptions[event.type](event.data);
+  }
+}
+```
+This `EventBus` class can subscribe to events and execute the appropriate callbacks when an event is published.
+
+3. **Event Consumers**: They are parts of the system that are interested in the events and react to them. Following on from our EventBus example:
+
+```javascript
+const eventBus = new EventBus();
+eventBus.subscribe('click', data => console.log(`Button clicked with data: ${data}`));
+```
+Here, we subscribe to the 'click' event and log a message when the event occurs.
+
+EDA allows for loose coupling, as event creators do not need to know about event consumers, and vice versa. This makes the system more flexible and scalable. However, it can be challenging to understand the overall flow of the system due to the asynchronous nature of events.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

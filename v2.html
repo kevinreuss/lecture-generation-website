@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mini lectures</title>
+    <style>
+      :root {
+        --apple-gray: #86868b;
+        --apple-light-gray: #f5f5f7;
+        --apple-dark: #1d1d1f;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        background-color: white;
+        color: var(--apple-dark);
+        margin: 0;
+        padding: 0;
+      }
+
+      .navigation {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .navigation h1 {
+        font-size: 48px;
+        line-height: 1.08349;
+        font-weight: 600;
+        letter-spacing: -0.003em;
+        color: var(--apple-dark);
+        margin-bottom: 2.5rem;
+      }
+
+      .topics-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .topics-list li {
+        background: var(--apple-light-gray);
+        border-radius: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .topics-list li:hover {
+        transform: scale(1.02);
+        background: #ebebeb;
+      }
+
+      .topics-list a {
+        color: var(--apple-dark);
+        text-decoration: none;
+        font-size: 17px;
+        line-height: 1.23536;
+        font-weight: 400;
+        display: block;
+        padding: 1.5rem;
+      }
+
+      .markdown-content {
+        max-width: 980px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+
+      .markdown-content p {
+        font-size: 17px;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        color: var(--apple-gray);
+      }
+
+      @media only screen and (max-width: 734px) {
+        .navigation {
+          padding: 1rem;
+        }
+
+        .navigation h1 {
+          font-size: 40px;
+        }
+
+        .topics-list {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+
+      .topic-section {
+        margin-bottom: 3rem;
+      }
+
+      .topic-section h2 {
+        font-size: 28px;
+        line-height: 1.14286;
+        font-weight: 600;
+        letter-spacing: 0.007em;
+        color: var(--apple-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      @media only screen and (max-width: 734px) {
+        .topic-section h2 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navigation">
+      <h1>mini lectures</h1>
+
+      <section class="topic-section">
+        <h2>Operating Systems</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="lectures/computer-science/memory-management-techniques/index.html"
+              >Memory Management Techniques</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/virtual-memory-concepts/index.html"
+              >Virtual Memory Concepts</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/context-switching-in-operating-systems/index.html"
+              >Context Switching in Operating Systems</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/round-robin-scheduling-algorithm/index.html"
+              >Round Robin Scheduling Algorithm</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/real-time-operating-systems-rtos/index.html"
+              >Real-Time Operating Systems (RTOS)</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/garbage-collection-strategies/index.html"
+              >Garbage Collection Strategies</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Parallel & High-Performance Computing</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="lectures/computer-science/fpga-programming-and-applications/index.html"
+              >FPGA Programming and Applications</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/simd-and-mimd-processing/index.html"
+              >SIMD and MIMD Processing</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/gpu-programming-with-cuda-and-opencl/index.html"
+              >GPU Programming with CUDA and OpenCL</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/concurrent-programming-with-threads/index.html"
+              >Concurrent Programming with Threads</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Web Technologies</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="lectures/computer-science/load-balancing-algorithms-round-robin-least-connections/index.html"
+              >Load Balancing Algorithms: Round Robin, Least Connections</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/caching-mechanisms-in-web-applications/index.html"
+              >Caching Mechanisms in Web Applications</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/server-side-rendering-ssr-vs-client-side-rendering-csr/index.html"
+              >Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Algorithms & Data Structures</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="lectures/computer-science/bresenhams-line-algorithm/index.html"
+              >Bresenham's Line Algorithm</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/sorting-algorithms-quicksort-merge-sort-and-radix-sort/index.html"
+              >Sorting Algorithms: Quicksort, Merge Sort, and Radix Sort</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Advanced Computing & AI</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="lectures/computer-science/quantum-computing-algorithms/index.html"
+              >Quantum Computing Algorithms</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/natural-language-processing-with-transformers/index.html"
+              >Natural Language Processing with Transformers</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Software Architecture</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="lectures/computer-science/blockchain-and-distributed-ledger-technology/index.html"
+              >Blockchain and Distributed Ledger Technology</a
+            >
+          </li>
+          <li>
+            <a
+              href="lectures/computer-science/dependency-injection-patterns/index.html"
+              >Dependency Injection Patterns</a
+            >
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

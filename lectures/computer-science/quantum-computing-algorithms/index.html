@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Quantum Computing Algorithms</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Quantum Computing Algorithms
+
+Quantum computing offers a fundamentally different approach to computation, capable of solving problems that are intractable on classical computers. Two of the most seminal quantum algorithms are Shor's algorithm for factorization and Grover's algorithm for search.
+
+## Shor's Algorithm
+
+Shor's algorithm can factorize integers in polynomial time, which is exponentially faster than the best classical algorithms. The key to Shor's speedup is the quantum Fourier transform.
+
+A simplified version of Shor's algorithm is:
+
+```
+1. Choose a random number a < N
+2. Compute gcd(a, N). If gcd(a, N) > 1, output gcd(a, N) as a nontrivial factor of N.
+3. Otherwise, use the quantum part of the procedure to find the period r of the function f(x) = a^x mod N.
+4. If r is odd or if a^(r/2) is equivalent to -1 modulo N, go back to step 1.
+5. Otherwise, both gcd(a^(r/2) + 1, N) and gcd(a^(r/2) - 1, N) are nontrivial factors of N.
+```
+
+## Grover's Algorithm
+
+Grover's algorithm is a quantum search algorithm that finds an unsorted database's solution with quadratic speedup. It uses the concept of amplitude amplification.
+
+A simplified version of Grover's algorithm is:
+
+```
+1. Initialize the system to a uniform superposition of all possible answers.
+2. Apply the Grover iteration G = HNH times, where H is the Hadamard transform, N is the problem-specific oracle, and sqrt(N) is the number of items.
+3. Measure the system. The result will be a solution with high probability.
+```
+
+This quantum speedup has implications in areas such as database search, cryptography, and more.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

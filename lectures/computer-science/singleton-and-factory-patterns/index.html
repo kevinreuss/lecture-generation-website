@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Singleton and Factory Patterns</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Singleton and Factory Patterns
+
+## Singleton Pattern
+
+The Singleton Pattern restricts the instantiation of a class to a single instance. The pattern ensures that only one instance of the class resides in the Java Virtual Machine (JVM), which is used globally.
+
+```java
+public class Singleton {
+    private static Singleton single_instance = null;
+
+    private Singleton() {
+    }
+
+    public static Singleton getInstance() {
+        if (single_instance == null)
+            single_instance = new Singleton();
+
+        return single_instance;
+    }
+}
+```
+
+In the example above, the constructor is made private to prevent the instantiation of the class from any other class. The `getInstance()` method provides the global point of access to the Singleton object and returns the instance to the caller.
+
+## Factory Pattern
+
+The Factory Pattern is a type of creational pattern that provides one of the best ways to create an object. In Factory pattern, objects are created without exposing the creation logic to the client.
+
+Here is an example of a simple Factory Pattern:
+
+```java
+public interface Shape {
+    void draw();
+}
+
+public class Rectangle implements Shape {
+    @Override
+    public void draw() {
+        System.out.println("Inside Rectangle::draw() method.");
+    }
+}
+
+public class ShapeFactory {
+    public Shape getShape(String shapeType) {
+        if (shapeType == null) {
+            return null;
+        }
+        if (shapeType.equalsIgnoreCase("RECTANGLE")) {
+            return new Rectangle();
+        }
+        return null;
+    }
+}
+```
+
+In this example, `ShapeFactory` is a factory class that creates and returns objects of varying classes (i.e., `Rectangle`) based on the input it receives. The client (i.e., the class that calls the `ShapeFactory`) doesn't need to know about the implementing classes, which encapsulates the object creation process.
+
+Both Singleton and Factory Patterns fall under the 'creational pattern' group as they provide one of the best ways to create an object, with Singleton providing a single globally accessible instance and Factory encapsulating the instantiation in a factory class.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

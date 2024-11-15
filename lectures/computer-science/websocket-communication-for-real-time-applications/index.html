@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebSocket Communication for Real-Time Applications</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# WebSocket Communication for Real-Time Applications
+
+WebSocket is a protocol that provides full-duplex communication channels over a single TCP connection. It is designed to be implemented in browsers and web servers but can be used by any client or server application.
+
+In contrast with HTTP, WebSocket provides real-time bidirectional communication. Once a WebSocket connection is established, it stays open until the client or server decides to close this connection.
+
+## Creating a WebSocket Connection
+
+In JavaScript, WebSocket connection can be created using the `WebSocket` constructor. Here's an example:
+
+```javascript
+const socket = new WebSocket('ws://localhost:8080');
+```
+
+The URL scheme to be used is "ws". The connection is established by upgrading an existing HTTP connection.
+
+## Receiving Messages from the Server
+
+Once the connection is open, you can then register event listeners to receive messages from the server:
+
+```javascript
+socket.onmessage = function(event) {
+  console.log("Received: " + event.data);
+};
+```
+
+## Sending Messages to the Server
+
+To send data to the server, use the `send()` method:
+
+```javascript
+socket.send("Hello Server!");
+```
+
+## Closing the Connection
+
+The connection can be closed by invoking the `close()` method:
+
+```javascript
+socket.close();
+```
+
+## Handling Connection Errors
+
+To handle potential errors, use the `onerror` event handler:
+
+```javascript
+socket.onerror = function(error) {
+  console.log("WebSocket Error: ", error);
+};
+```
+
+## WebSocket Server
+
+On the server side, you can use libraries like `ws` on Node.js to create a WebSocket server. Here's a simple server that echoes back the messages it receives:
+
+```javascript
+const WebSocket = require('ws');
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on('connection', (ws) => {
+  ws.on('message', (message) => {
+    console.log('received: %s', message);
+    ws.send(`Hello, you sent -> ${message}`);
+  });
+});
+```
+
+In a nutshell, WebSocket provides a much more efficient communication method for real-time applications compared to traditional HTTP requests, enabling you to create highly interactive applications with ease.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

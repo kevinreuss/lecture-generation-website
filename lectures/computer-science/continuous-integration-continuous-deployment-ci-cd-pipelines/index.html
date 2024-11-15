@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Continuous Integration-Continuous Deployment (CI-CD) Pipelines</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Continuous Integration/Continuous Deployment (CI/CD) Pipelines
+
+CI/CD pipelines automate the software delivery process. The pipeline builds code, runs tests (CI), and safely deploys a new version of the application (CD).
+
+## Continuous Integration
+
+CI is a coding philosophy and set of practices that drive development teams to implement small changes and check in code to version control repositories frequently.
+
+Example: Jenkins, a popular open-source CI server allows configuring workflows, called "pipelines". Here's a simple Jenkins pipeline script:
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+    }
+}
+```
+
+This script includes two stages: `Build` and `Test`. Each stage contains steps that execute commands.
+
+## Continuous Deployment
+
+Continuous Deployment follows the testing phase of the pipeline and involves automatic deployment of the code to production.
+
+Example: In AWS, CodeDeploy is a service that automates application deployments. An `appspec.yml` file provides the deployment instructions, like so:
+
+```yaml
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/html
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_server
+  ApplicationStart:
+    - location: scripts/start_server
+```
+
+This `appspec.yml` file instructs CodeDeploy to copy the files from the root directory of the source code to the `/var/www/html` directory on the instance. It also specifies scripts to be run at different stages of the deployment.
+
+## CI/CD Benefits
+
+CI/CD pipelines provide numerous benefits:
+
+- **Fast feedback**: Automated builds and tests give developers quick feedback on changes they make, allowing them to address issues immediately.
+- **Automated deployment**: Manual deployment processes can be error-prone and time-consuming. Automating these processes ensures consistency and saves time.
+- **Continuous delivery**: With a working CI/CD pipeline, you're always ready to deploy your application. This enables a more rapid response to market changes.
+
+Remember, CI/CD is not a tool but a cultural shift in how we develop and deliver software. While tools help us implement CI/CD, the key is the commitment to integrating and deploying code continuously.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

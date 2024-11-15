@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)
+
+Server-Side Rendering (SSR) and Client-Side Rendering (CSR) are two methods used to display content on a user's browser.
+
+## Server-Side Rendering (SSR)
+
+In SSR, the server's responsibility is to generate the full HTML for a page in response to a request. It means the server converts the React components into an HTML string, then sends it to the client.
+
+Consider this Node.js and Express example:
+
+```javascript
+app.get("/", (req, res) => {
+  const html = ReactDOMServer.renderToString(<App />);
+  res.send(html);
+});
+```
+
+In this case, the server renders the `App` component into an HTML string and sends it as a response.
+
+## Client-Side Rendering (CSR)
+
+In CSR, an HTML file with a JavaScript bundle is sent to the client. The rendering happens in the browser, where the JavaScript creates the DOM elements and manipulates the HTML as needed.
+
+Here's a simplified example with React:
+
+```javascript
+ReactDOM.render(<App />, document.getElementById("root"));
+```
+
+Here, `App` is a React component that gets rendered in the browser.
+
+## Comparison
+
+1. **Performance**: SSR can display a functional page faster than CSR as it sends fully composed HTML to the browser. However, CSR might feel faster as it only updates parts that need to change.
+2. **SEO**: Search engine bots can crawl and index server-rendered pages more efficiently, which is advantageous for SEO.
+3. **Complexity**: CSR is generally simpler to implement than SSR. But SSR can lead to better performance and SEO, so the complexity can be worthwhile.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

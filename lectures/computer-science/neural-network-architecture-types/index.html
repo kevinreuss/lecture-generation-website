@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Neural Network Architecture Types</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Neural Network Architecture Types
+
+Neural networks can be broadly categorized into four main architecture types: Feedforward Neural Network (FNN), Radial basis function Neural Network (RBFNN), Recurrent Neural Network (RNN), and Convolutional Neural Network (CNN).
+
+## Feedforward Neural Network (FNN)
+
+FNN is the simplest type of artificial neural network. In this architecture, information moves in only one direction—forward—from the input nodes, through the hidden nodes (if any), and to the output nodes. No cycles or loops are present.
+
+For instance, a basic FNN can be implemented using Keras like this:
+
+```python
+from keras.models import Sequential
+from keras.layers import Dense
+
+model = Sequential()
+model.add(Dense(32, activation='relu', input_dim=100))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(optimizer='rmsprop', loss='binary_crossentropy', metrics=['accuracy'])
+```
+
+## Radial basis function Neural Network (RBFNN)
+
+RBFNN is a type of ANN that uses radial basis functions as activation functions. It differs from other neural networks due to its fast learning speed. 
+
+```python
+from sklearn.cluster import KMeans
+from scipy.spatial import distance
+
+kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
+centers = kmeans.cluster_centers_
+d_max = max([distance.euclidean(c, centers) for c in centers])
+```
+
+## Recurrent Neural Network (RNN)
+
+RNNs are networks with loops in them, allowing information to persist. They are called recurrent because they perform the same task for every element of a sequence, with the output being depended on the previous computations. 
+
+Here's an example of a simple RNN in Keras:
+
+```python
+from keras.models import Sequential
+from keras.layers import SimpleRNN
+
+model = Sequential()
+model.add(SimpleRNN(32, input_shape=(10, 16)))
+```
+
+## Convolutional Neural Network (CNN)
+
+CNNs are primarily used for image processing, named after their mathematical operation called convolution. They are pre-trained models with tens of thousands of images on multiple GPUs for days or weeks.
+
+```python
+from keras.models import Sequential
+from keras.layers import Conv2D
+
+model = Sequential()
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(64, 64, 3)))
+```
+Each of these architectures has its use cases and strengths, and understanding them will help you apply the right type to the right problem.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

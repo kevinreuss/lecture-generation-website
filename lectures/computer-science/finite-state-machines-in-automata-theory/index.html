@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Finite State Machines in Automata Theory</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Finite State Machines in Automata Theory
+
+A Finite State Machine (FSM) is a mathematical model of computation used to simulate sequential logic, or, in other words, to represent and control execution flow. An FSM is defined by a list of its states, its initial state, and the conditions for each transition.
+
+## Components of an FSM
+
+An FSM consists of:
+
+1. A set of states (S)
+2. A set of input events (I)
+3. A set of output events (O)
+4. An initial state (S0)
+5. A state transition function: F: S x I -> S
+6. An output function: G: S x I -> O
+
+## Types of FSMs
+
+There are two types of FSMs: Mealy Machines and Moore Machines.
+
+**Mealy Machines** produce outputs only in response to an input (i.e., output depends on both state and input). 
+
+**Moore Machines** produce outputs based on states only (i.e., output depends only on the state).
+
+## Example: A Simple Traffic Light System
+
+Consider a simple traffic light system that switches between three states: Green, Yellow, and Red.
+
+```python
+class TrafficLightFSM:
+    def __init__(self):
+        self.states = ['Green', 'Yellow', 'Red']
+        self.current_state = 'Red'
+
+    def transition(self, input):
+        if self.current_state == 'Red' and input == 'timer_elapsed':
+            self.current_state = 'Green'
+        elif self.current_state == 'Green' and input == 'timer_elapsed':
+            self.current_state = 'Yellow'
+        elif self.current_state == 'Yellow' and input == 'timer_elapsed':
+            self.current_state = 'Red'
+
+    def output(self):
+        return self.current_state
+```
+
+In the above Python code snippet, the `TrafficLightFSM` class represents our FSM. The `transition` method represents the state transition function (F), and the `output` method represents the output function (G).
+
+FSMs like the traffic light system can be used to model a wide range of systems in software engineering, from parsing text to designing embedded systems.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

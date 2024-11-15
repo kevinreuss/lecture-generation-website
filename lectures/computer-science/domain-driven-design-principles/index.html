@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Domain-Driven Design Principles</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Domain-Driven Design Principles
+
+Domain-Driven Design (DDD) is a software design approach that emphasizes the importance of the business domain, its logic, and complexities. It places the focus on domain logic and bases the other parts of the application around it. 
+
+## Ubiquitous Language
+
+Ubiquitous Language is a common language between developers and users. This language should be used in all aspects of the project, from the codebase to the documentation. For example, if a piece of software manages "Orders," the code should reflect this terminology. 
+
+```java
+public class Order {
+    private String orderId;
+    private String orderDetails;
+}
+```
+
+## Bounded Context
+
+Bounded Context deals with the delineation of the model's boundaries. It suggests that a model should make sense and be consistent within its context. For example, in an e-commerce application, the "Order" in the sales context may have different attributes and behaviors than an "Order" in the shipping context.
+
+```java
+public class SalesOrder {
+    private String orderId;
+    private String customerName;
+}
+
+public class ShippingOrder {
+    private String orderId;
+    private String shippingAddress;
+}
+```
+
+## Entities and Value Objects
+
+Entities are objects that have a distinct identity that persists over time and across different states. Value Objects, on the other hand, are immutable and their identity is based on their state, not on any individual characteristic. 
+
+```java
+public class Customer { // Entity
+    private String customerId;
+    private String name;
+}
+
+public class Money { // Value Object
+    private BigDecimal amount;
+    private Currency currency;
+}
+```
+
+## Aggregates
+
+An Aggregate is a cluster of domain objects that can be treated as a single unit. An example would be an Order and its line-items. These objects are bound together by a root entity, the Aggregate Root.
+
+```java
+public class Order { // Aggregate Root
+    private String orderId;
+    private List<OrderLineItem> lineItems; // part of the Aggregate
+}
+```
+
+## Repositories
+
+Repositories are used to encapsulate the storage, retrieval, and search behavior. They present clients with a simple model for object persistence and decouple application and domain design from persistence technology.
+
+```java
+public interface OrderRepository {
+    Order findById(String id);
+    void save(Order order);
+}
+```
+
+These are the core principles of Domain-Driven Design. By following these, you can ensure that your software's design is aligned closely with its domain, leading to more maintainable and understandable code.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

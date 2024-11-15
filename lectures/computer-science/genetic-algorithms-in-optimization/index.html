@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Genetic Algorithms in Optimization</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Genetic Algorithms in Optimization
+
+Genetic Algorithms (GAs) are inspired by natural evolution and used for optimization problems. They use techniques such as mutation, crossover (recombination), and selection.
+
+Here's a high-level overview of a GA:
+
+1. **Initialization**: Start with a population of randomly generated solutions.
+2. **Selection**: Evaluate the fitness of each individual in the population.
+3. **Crossover**: Select a pair of parent solutions and combine them to form new offspring.
+4. **Mutation**: Randomly alter some genes in the new offspring.
+5. **Replacement**: Replace least fit individuals in the population with the new offspring.
+
+Let's illustrate with a simple Python implementation of a GA for the problem of maximizing the function `f(x) = x^2`.
+
+```python
+import random
+
+# Fitness Function
+def fitness(x):
+    return x*x
+
+# Initial Population
+population = [random.randint(-100,100) for _ in range(100)]
+
+for generation in range(1000):
+    population = sorted(population, key = fitness, reverse = True)
+    
+    # Crossover
+    for i in range(20, 100):
+        parent1 = random.choice(population[:20])
+        parent2 = random.choice(population[:20])
+        child = (parent1 + parent2) / 2 + random.uniform(-10,10)
+        population[i] = child
+    
+    # Mutation
+    for i in range(20, 100):
+        if random.uniform(0,1) < 0.1:
+            population[i] += random.uniform(-10,10)
+```
+
+In the code, the fitness function is `x^2` that we want to maximize. The population is initialized with 100 random integers. The top 20 individuals (those with the highest fitness) are allowed to breed. The offspring replace the bottom 80 individuals in the population. There's also a 10% chance that an individual will undergo mutation. 
+
+The GA will run for 1000 generations, and hopefully, the individuals in the final population will be close to the optimal solution of the problem.
+
+This is a simplified example. In practice, GAs are used for more complex optimization problems, and there are many variations and enhancements to the basic algorithm.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

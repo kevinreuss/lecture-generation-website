@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dynamic and Static Memory Allocation</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Dynamic and Static Memory Allocation
+
+## Static Memory Allocation
+
+In static memory allocation, the size and type of the allocated memory are known at compile time. The memory is allocated on the stack and deallocated automatically when it goes out of scope. Below is a simple example in C:
+
+```c
+int myArray[20]; // static memory allocation
+```
+
+In this case, `myArray` allocates 20 integers worth of memory on the stack when it is declared. This block of memory will be automatically freed when `myArray` goes out of scope.
+
+## Dynamic Memory Allocation
+
+Dynamic memory allocation, on the other hand, allows you to allocate memory during runtime. The allocated memory resides in the heap and must be managed manually. This means you have to deallocate it yourself when it's no longer needed, using functions like `free()` in C or `delete` in C++. Here's an example in C:
+
+```c
+int* myDynamicArray = malloc(20 * sizeof(int)); // dynamic memory allocation
+...
+free(myDynamicArray); // freeing dynamically allocated memory
+```
+
+In the example above, `myDynamicArray` points to a block of memory in the heap, large enough to hold 20 integers. This block of memory remains allocated until `free()` is called on it.
+
+## Comparison
+
+While static memory allocation is easier and safer due to automatic deallocation, it lacks flexibility. Dynamic memory allocation, however, gives you more control and allows dynamic data structures like linked lists and trees. But, it makes it easier to cause memory leaks or dangling pointers if not handled properly. 
+
+In summary, choosing between dynamic and static memory allocation depends on your needs - static for simplicity and safety, dynamic for flexibility and control.  
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

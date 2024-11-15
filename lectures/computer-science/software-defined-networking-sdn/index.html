@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Software-Defined Networking (SDN)</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Software-Defined Networking (SDN)
+
+Software-Defined Networking (SDN) is an approach to networking that allows for dynamic, programmatically efficient network configuration to improve network performance and monitoring. SDN is intended to address the static architecture of traditional networks which is decentralized and complex.
+
+## Components of SDN
+
+1. **SDN Application Layer**: This is where your network applications reside, and these applications can interact with the SDN Controller via northbound APIs.
+2. **SDN Controller**: The "brain" of the network, it provides the centralized view of the overall network. 
+3. **SDN Data plane**: The network devices that forward traffic, these are the 'muscles' of the network.
+
+## Key Concepts
+
+**Centralized Control**: SDN offers a centralized view of the network, making it easier to deploy new applications and services.
+
+**Programmability**: Network administrators can program traffic routing to optimize resource usage.
+
+**Open Standards-Based and Vendor-Neutral**: SDN utilizes open APIs, such as OpenFlow, that are independent of any specific vendor.
+
+## OpenFlow
+
+OpenFlow is an open standard that enables researchers to run experimental protocols in campus networks. It is the first standard communication interface defined between the control and forwarding layers of an SDN architecture.
+
+Example of OpenFlow 'Flow Table Entry':
+
+```plaintext
+Match Fields: Incoming Port, Ethernet Src/Dst, VLAN ID, EthType, IP Src/Dst, IP Proto, IP ToS Bits, TCP/UDP Src/Dst Port, ICMP Type/Code
+Actions: Drop, Forward (Layer2 Switching), Forward (Layer3 Routing), Enqueue (QoS), Modify Field (NAT), Send to Controller
+```
+
+These entries can be added, updated, and deleted by the SDN controller based on network requirements.
+
+## SDN Use Cases
+
+**Network Virtualization**: One physical network can be partitioned into multiple logical networks, each potentially with different network topologies.
+
+**Dynamic Traffic Management**: Traffic flow can be dynamically managed and adjusted based on real-time analysis and needs.
+
+**Security**: Centralized control and programmability make it easier to deploy and manage security, as well as to isolate potential attacks.
+
+In conclusion, SDN brings flexibility, control, and adaptability to network management, enabling businesses to optimize resource usage, improve data traffic control, and provide better end-user experiences.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Diff Algorithms for Version Control</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Diff Algorithms for Version Control
+
+Diff algorithms are integral to version control systems (VCSs) like Git. They identify the differences between two data sets, often used to indicate changes made in different versions of source code.
+
+## Myers' Algorithm
+
+One widely-used diff algorithm is the Myers' algorithm. It uses a graph approach to find the shortest edit script (SES) between two sequences.
+
+Consider two sequences, A and B. The SES is the sequence of insertions (I) and deletions (D) that transforms A into B. 
+
+```csharp
+// Code representation using C#
+string A = "ABC";
+string B = "BCD";
+```
+
+In this example, the SES could be `D, I, I` - delete 'A', insert 'B', insert 'D'.
+
+## Patience Diff Algorithm
+
+Another algorithm is the Patience Diff algorithm, used by Git as one option for generating diffs. It's effective in finding moved or copied code blocks.
+
+```python
+# Code representation using Python
+list1 = ['A', 'B', 'C', 'D', 'E']
+list2 = ['B', 'C', 'E', 'A', 'D']
+```
+
+In this example, Patience Diff would identify that 'A' and 'D' have moved in the sequence, rather than being deleted and reinserted.
+
+## Histogram Diff Algorithm
+
+Histogram Diff, also used by Git, works similarly to Patience Diff but is optimized for runtime efficiency in scenarios with many duplicate lines.
+
+```python
+# Code representation using Python
+list1 = ['A', 'B', 'C', 'D', 'E', 'A', 'B']
+list2 = ['B', 'C', 'E', 'A', 'D', 'A', 'B']
+```
+
+In this example, Histogram Diff would handle the duplicate 'A' and 'B' more efficiently than Patience Diff.
+
+Each of these diff algorithms has its strengths and weaknesses, and the choice of which to use can depend on the specific requirements of your version control needs.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

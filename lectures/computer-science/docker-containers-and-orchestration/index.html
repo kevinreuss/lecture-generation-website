@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Docker Containers and Orchestration</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Docker Containers and Orchestration
+
+## Docker Containers
+
+Docker containers are lightweight, standalone, executable packages that include everything needed to run a piece of software. They wrap software in a complete filesystem that contains code, runtime, system tools, and libraries, ensuring that the software runs consistently on any infrastructure.
+
+Here's an example of a Dockerfile, which describes an image:
+
+```Dockerfile
+FROM python:3.7-alpine
+WORKDIR /app
+COPY . /app
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]
+```
+
+This Dockerfile takes a Python 3.7 base image, sets the working directory to `/app`, copies the current directory into `/app`, installs the Python dependencies, and sets the default command to run the application.
+
+## Docker Orchestration
+
+Orchestration in the context of Docker involves managing the lifecycles of containers, especially in large, dynamic environments. Docker Swarm and Kubernetes are popular tools for Docker orchestration.
+
+### Docker Swarm
+
+Swarm is Docker's built-in orchestration tool. It uses the standard Docker API, making it compatible with any tool that already works with Docker daemon.
+
+Here's an example of creating a Docker Swarm:
+
+```bash
+$ docker swarm init --advertise-addr <MANAGER-IP>
+$ docker swarm join --token <TOKEN> <MANAGER-IP>:2377
+```
+
+The first command initializes a new swarm, and the second command adds a new node to the swarm.
+
+### Kubernetes
+
+Kubernetes, on the other hand, is a more powerful orchestration tool, capable of handling more complex use-cases. It manages and scales applications composed of multiple containers, across multiple hosts.
+
+Here's an example of a Kubernetes Deployment:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+This Deployment creates three replicated Pods, which are managed as a group.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
