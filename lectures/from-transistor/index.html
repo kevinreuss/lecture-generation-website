@@ -132,11 +132,66 @@
           font-size: 24px;
         }
       }
+
+      .topics-list li.completed {
+        background: #e8f5e9; /* Light green background for completed lectures */
+      }
+
+      .lecture-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1.5rem;
+      }
+
+      .lecture-item a {
+        padding: 0; /* Remove padding from link as it's now handled by lecture-item */
+      }
+
+      .mark-button {
+        align-self: flex-end;
+        font-size: 14px;
+        padding: 4px 12px;
+        border-radius: 980px;
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        color: var(--apple-dark);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mark-button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .mark-button svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Adjust completed state styles */
+      .topics-list li.completed .mark-button {
+        color: #43a047; /* Darker green for better contrast */
+      }
+
+      .progress-info {
+        font-size: 17px;
+        color: var(--apple-gray);
+        margin-bottom: 2rem;
+      }
     </style>
   </head>
   <body>
     <div class="navigation">
       <h1>mini lectures: from transistor to browser</h1>
+
+      <div class="progress-info">
+        <span id="progress-counter">0</span> of 50 lectures read (stored in
+        local storage)
+      </div>
 
       <div class="header-actions">
         <a
@@ -198,262 +253,1381 @@
       </style>
 
       <section class="topic-section">
-        <!-- <h2>From Transistor</h2> -->
         <ul class="topics-list">
           <li>
-            <a
-              href="material/1_fundamentals-of-semiconductor-physics/index.html"
-              >1: Fundamentals of Semiconductor Physics</a
-            >
+            <div class="lecture-item">
+              <a
+                href="material/1_fundamentals-of-semiconductor-physics/index.html"
+              >
+                1: Fundamentals of Semiconductor Physics
+              </a>
+              <button class="mark-button" data-lecture-id="1">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/2_transistor-types-and-basic-operation/index.html"
-              >2: Transistor Types and Basic Operation</a
-            >
+            <div class="lecture-item">
+              <a
+                href="material/2_transistor-types-and-basic-operation/index.html"
+              >
+                2: Transistor Types and Basic Operation
+              </a>
+              <button class="mark-button" data-lecture-id="2">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a
-              href="material/3_building-logic-gates-from-transistors/index.html"
-              >3: Building Logic Gates from Transistors</a
-            >
+            <div class="lecture-item">
+              <a
+                href="material/3_building-logic-gates-from-transistors/index.html"
+              >
+                3: Building Logic Gates from Transistors
+              </a>
+              <button class="mark-button" data-lecture-id="3">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/4_combinational-logic-circuit-design/index.html"
-              >4: Combinational Logic Circuit Design</a
-            >
+            <div class="lecture-item">
+              <a
+                href="material/4_combinational-logic-circuit-design/index.html"
+              >
+                4: Combinational Logic Circuit Design
+              </a>
+              <button class="mark-button" data-lecture-id="4">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/5_sequential-logic-and-flip-flops/index.html"
-              >5: Sequential Logic and Flip-Flops</a
-            >
+            <div class="lecture-item">
+              <a href="material/5_sequential-logic-and-flip-flops/index.html">
+                5: Sequential Logic and Flip-Flops
+              </a>
+              <button class="mark-button" data-lecture-id="5">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/6_registers-and-memory-cells/index.html"
-              >6: Registers and Memory Cells</a
-            >
+            <div class="lecture-item">
+              <a href="material/6_registers-and-memory-cells/index.html">
+                6: Registers and Memory Cells
+              </a>
+              <button class="mark-button" data-lecture-id="6">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/7_clock-signals-and-timing/index.html"
-              >7: Clock Signals and Timing</a
-            >
+            <div class="lecture-item">
+              <a href="material/7_clock-signals-and-timing/index.html">
+                7: Clock Signals and Timing
+              </a>
+              <button class="mark-button" data-lecture-id="7">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/8_arithmetic-logic-unit-alu-design/index.html"
-              >8: Arithmetic Logic Unit (ALU) Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/8_arithmetic-logic-unit-alu-design/index.html">
+                8: Arithmetic Logic Unit (ALU) Design
+              </a>
+              <button class="mark-button" data-lecture-id="8">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/9_control-unit-implementation/index.html"
-              >9: Control Unit Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/9_control-unit-implementation/index.html">
+                9: Control Unit Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="9">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/10_basic-cpu-architecture/index.html"
-              >10: Basic CPU Architecture</a
-            >
+            <div class="lecture-item">
+              <a href="material/10_basic-cpu-architecture/index.html">
+                10: Basic CPU Architecture
+              </a>
+              <button class="mark-button" data-lecture-id="10">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/11_memory-hierarchy-fundamentals/index.html"
-              >11: Memory Hierarchy Fundamentals</a
-            >
+            <div class="lecture-item">
+              <a href="material/11_memory-hierarchy-fundamentals/index.html">
+                11: Memory Hierarchy Fundamentals
+              </a>
+              <button class="mark-button" data-lecture-id="11">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/12_bus-systems-and-i-o/index.html"
-              >12: Bus Systems and I-O</a
-            >
+            <div class="lecture-item">
+              <a href="material/12_bus-systems-and-i-o/index.html">
+                12: Bus Systems and I-O
+              </a>
+              <button class="mark-button" data-lecture-id="12">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/13_machine-code-representation/index.html"
-              >13: Machine Code Representation</a
-            >
+            <div class="lecture-item">
+              <a href="material/13_machine-code-representation/index.html">
+                13: Machine Code Representation
+              </a>
+              <button class="mark-button" data-lecture-id="13">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/14_assembly-language-basics/index.html"
-              >14: Assembly Language Basics</a
-            >
+            <div class="lecture-item">
+              <a href="material/14_assembly-language-basics/index.html">
+                14: Assembly Language Basics
+              </a>
+              <button class="mark-button" data-lecture-id="14">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/15_creating-a-simple-assembler/index.html"
-              >15: Creating a Simple Assembler</a
-            >
+            <div class="lecture-item">
+              <a href="material/15_creating-a-simple-assembler/index.html">
+                15: Creating a Simple Assembler
+              </a>
+              <button class="mark-button" data-lecture-id="15">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/16_basic-operating-system-concepts/index.html"
-              >16: Basic Operating System Concepts</a
-            >
+            <div class="lecture-item">
+              <a href="material/16_basic-operating-system-concepts/index.html">
+                16: Basic Operating System Concepts
+              </a>
+              <button class="mark-button" data-lecture-id="16">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/17_bootloader-implementation/index.html"
-              >17: Bootloader Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/17_bootloader-implementation/index.html">
+                17: Bootloader Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="17">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/18_memory-management-unit-mmu/index.html"
-              >18: Memory Management Unit (MMU)</a
-            >
+            <div class="lecture-item">
+              <a href="material/18_memory-management-unit-mmu/index.html">
+                18: Memory Management Unit (MMU)
+              </a>
+              <button class="mark-button" data-lecture-id="18">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/19_virtual-memory-implementation/index.html"
-              >19: Virtual Memory Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/19_virtual-memory-implementation/index.html">
+                19: Virtual Memory Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="19">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/20_process-management-basics/index.html"
-              >20: Process Management Basics</a
-            >
+            <div class="lecture-item">
+              <a href="material/20_process-management-basics/index.html">
+                20: Process Management Basics
+              </a>
+              <button class="mark-button" data-lecture-id="20">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/21_thread-implementation/index.html"
-              >21: Thread Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/21_thread-implementation/index.html">
+                21: Thread Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="21">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/22_system-calls-design/index.html"
-              >22: System Calls Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/22_system-calls-design/index.html">
+                22: System Calls Design
+              </a>
+              <button class="mark-button" data-lecture-id="22">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/23_file-system-basics/index.html"
-              >23: File System Basics</a
-            >
+            <div class="lecture-item">
+              <a href="material/23_file-system-basics/index.html">
+                23: File System Basics
+              </a>
+              <button class="mark-button" data-lecture-id="23">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/24_device-drivers/index.html"
-              >24: Device Drivers</a
-            >
+            <div class="lecture-item">
+              <a href="material/24_device-drivers/index.html">
+                24: Device Drivers
+              </a>
+              <button class="mark-button" data-lecture-id="24">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/25_compiler-front-end-design/index.html"
-              >25: Compiler Front-end Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/25_compiler-front-end-design/index.html">
+                25: Compiler Front-end Design
+              </a>
+              <button class="mark-button" data-lecture-id="25">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/26_lexical-analysis-implementation/index.html"
-              >26: Lexical Analysis Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/26_lexical-analysis-implementation/index.html">
+                26: Lexical Analysis Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="26">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/27_parser-implementation/index.html"
-              >27: Parser Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/27_parser-implementation/index.html">
+                27: Parser Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="27">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/28_abstract-syntax-tree-generation/index.html"
-              >28: Abstract Syntax Tree Generation</a
-            >
+            <div class="lecture-item">
+              <a href="material/28_abstract-syntax-tree-generation/index.html">
+                28: Abstract Syntax Tree Generation
+              </a>
+              <button class="mark-button" data-lecture-id="28">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/29_intermediate-code-generation/index.html"
-              >29: Intermediate Code Generation</a
-            >
+            <div class="lecture-item">
+              <a href="material/29_intermediate-code-generation/index.html">
+                29: Intermediate Code Generation
+              </a>
+              <button class="mark-button" data-lecture-id="29">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/30_code-optimization-basics/index.html"
-              >30: Code Optimization Basics</a
-            >
+            <div class="lecture-item">
+              <a href="material/30_code-optimization-basics/index.html">
+                30: Code Optimization Basics
+              </a>
+              <button class="mark-button" data-lecture-id="30">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/31_machine-code-generation/index.html"
-              >31: Machine Code Generation</a
-            >
+            <div class="lecture-item">
+              <a href="material/31_machine-code-generation/index.html">
+                31: Machine Code Generation
+              </a>
+              <button class="mark-button" data-lecture-id="31">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/32_linker-and-loader-design/index.html"
-              >32: Linker and Loader Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/32_linker-and-loader-design/index.html">
+                32: Linker and Loader Design
+              </a>
+              <button class="mark-button" data-lecture-id="32">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/33_high-level-language-design/index.html"
-              >33: High-Level Language Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/33_high-level-language-design/index.html">
+                33: High-Level Language Design
+              </a>
+              <button class="mark-button" data-lecture-id="33">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/34_memory-allocation-strategies/index.html"
-              >34: Memory Allocation Strategies</a
-            >
+            <div class="lecture-item">
+              <a href="material/34_memory-allocation-strategies/index.html">
+                34: Memory Allocation Strategies
+              </a>
+              <button class="mark-button" data-lecture-id="34">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/35_network-stack-fundamentals/index.html"
-              >35: Network Stack Fundamentals</a
-            >
+            <div class="lecture-item">
+              <a href="material/35_network-stack-fundamentals/index.html">
+                35: Network Stack Fundamentals
+              </a>
+              <button class="mark-button" data-lecture-id="35">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/36_physical-layer-implementation/index.html"
-              >36: Physical Layer Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/36_physical-layer-implementation/index.html">
+                36: Physical Layer Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="36">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/37_data-link-layer-protocols/index.html"
-              >37: Data Link Layer Protocols</a
-            >
+            <div class="lecture-item">
+              <a href="material/37_data-link-layer-protocols/index.html">
+                37: Data Link Layer Protocols
+              </a>
+              <button class="mark-button" data-lecture-id="37">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/38_ip-protocol-implementation/index.html"
-              >38: IP Protocol Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/38_ip-protocol-implementation/index.html">
+                38: IP Protocol Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="38">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/39_tcp-protocol-implementation/index.html"
-              >39: TCP Protocol Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/39_tcp-protocol-implementation/index.html">
+                39: TCP Protocol Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="39">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/40_socket-programming-basics/index.html"
-              >40: Socket Programming Basics</a
-            >
+            <div class="lecture-item">
+              <a href="material/40_socket-programming-basics/index.html">
+                40: Socket Programming Basics
+              </a>
+              <button class="mark-button" data-lecture-id="40">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/41_http-protocol-implementation/index.html"
-              >41: HTTP Protocol Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/41_http-protocol-implementation/index.html">
+                41: HTTP Protocol Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="41">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/42_browser-engine-architecture/index.html"
-              >42: Browser Engine Architecture</a
-            >
+            <div class="lecture-item">
+              <a href="material/42_browser-engine-architecture/index.html">
+                42: Browser Engine Architecture
+              </a>
+              <button class="mark-button" data-lecture-id="42">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/43_html-parser-implementation/index.html"
-              >43: HTML Parser Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/43_html-parser-implementation/index.html">
+                43: HTML Parser Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="43">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/44_css-engine-design/index.html"
-              >44: CSS Engine Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/44_css-engine-design/index.html">
+                44: CSS Engine Design
+              </a>
+              <button class="mark-button" data-lecture-id="44">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/45_layout-engine-fundamentals/index.html"
-              >45: Layout Engine Fundamentals</a
-            >
+            <div class="lecture-item">
+              <a href="material/45_layout-engine-fundamentals/index.html">
+                45: Layout Engine Fundamentals
+              </a>
+              <button class="mark-button" data-lecture-id="45">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/46_rendering-engine-basics/index.html"
-              >46: Rendering Engine Basics</a
-            >
+            <div class="lecture-item">
+              <a href="material/46_rendering-engine-basics/index.html">
+                46: Rendering Engine Basics
+              </a>
+              <button class="mark-button" data-lecture-id="46">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/47_javascript-engine-design/index.html"
-              >47: JavaScript Engine Design</a
-            >
+            <div class="lecture-item">
+              <a href="material/47_javascript-engine-design/index.html">
+                47: JavaScript Engine Design
+              </a>
+              <button class="mark-button" data-lecture-id="47">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/48_event-loop-implementation/index.html"
-              >48: Event Loop Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/48_event-loop-implementation/index.html">
+                48: Event Loop Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="48">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/49_dom-implementation/index.html"
-              >49: DOM Implementation</a
-            >
+            <div class="lecture-item">
+              <a href="material/49_dom-implementation/index.html">
+                49: DOM Implementation
+              </a>
+              <button class="mark-button" data-lecture-id="49">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
           <li>
-            <a href="material/50_browser-storage-systems/index.html"
-              >50: Browser Storage Systems</a
-            >
+            <div class="lecture-item">
+              <a href="material/50_browser-storage-systems/index.html">
+                50: Browser Storage Systems
+              </a>
+              <button class="mark-button" data-lecture-id="50">
+                <svg
+                  class="check-icon"
+                  viewBox="0 0 24 24"
+                  style="display: none"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                  />
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path
+                    fill="currentColor"
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
           </li>
         </ul>
       </section>
     </div>
+
+    <script>
+      // Initialize localStorage if needed
+      if (!localStorage.getItem("completedLectures")) {
+        localStorage.setItem("completedLectures", JSON.stringify([]));
+      }
+
+      function updateUI() {
+        const completedLectures = JSON.parse(
+          localStorage.getItem("completedLectures")
+        );
+        const progressCounter = document.getElementById("progress-counter");
+        progressCounter.textContent = completedLectures.length;
+
+        document.querySelectorAll(".mark-button").forEach((button) => {
+          const lectureId = button.dataset.lectureId;
+          const listItem = button.closest("li");
+          const checkIcon = button.querySelector(".check-icon");
+          const plusIcon = button.querySelector(".plus-icon");
+          const buttonText = button.querySelector(".button-text");
+
+          if (completedLectures.includes(lectureId)) {
+            buttonText.textContent = "Mark as unread";
+            checkIcon.style.display = "none";
+            plusIcon.style.display = "none";
+            listItem.classList.add("completed");
+          } else {
+            buttonText.textContent = "Mark as read";
+            checkIcon.style.display = "none";
+            plusIcon.style.display = "block";
+            listItem.classList.remove("completed");
+          }
+        });
+      }
+
+      // Add click handlers to all buttons
+      document.querySelectorAll(".mark-button").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const lectureId = button.dataset.lectureId;
+          const completedLectures = JSON.parse(
+            localStorage.getItem("completedLectures")
+          );
+
+          if (completedLectures.includes(lectureId)) {
+            // Remove from completed
+            const index = completedLectures.indexOf(lectureId);
+            completedLectures.splice(index, 1);
+          } else {
+            // Add to completed
+            completedLectures.push(lectureId);
+          }
+
+          localStorage.setItem(
+            "completedLectures",
+            JSON.stringify(completedLectures)
+          );
+          updateUI();
+        });
+      });
+
+      // Initial UI update
+      updateUI();
+    </script>
   </body>
 </html>
