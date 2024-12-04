@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>15_Creating a Simple Assembler</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Creating a Simple Assembler
+
+An assembler transforms assembly language into machine code. It's essentially a program that translates mnemonic language instructions into binary or hexadecimal instructions that a computer's CPU can execute.
+
+## Main Components of an Assembler
+
+1. **A Symbol Table**: This is used to manage labels in the source code. Labels are symbolic names for memory addresses.
+
+2. **A Lexer or Scanner**: This part of the assembler breaks each line of the source code into its elements.
+
+3. **A Parser**: It checks syntax and semantics, and generates the machine code.
+
+## Basic Steps
+
+1. **Read the Source**: The assembler reads the assembly code line-by-line. Each line is typically an instruction or a directive.
+
+2. **Break Down the Line**: The lexer separates each line into its constituent elements: labels, instructions/directives, operands, and comments.
+
+3. **Parse the Line**: The parser determines the correct binary representation for the instructions or directives.
+
+4. **Generate Machine Code**: The machine code is output in a format that can be loaded into memory and executed.
+
+## Example
+
+Consider a simple assembly language instruction:
+
+```assembly
+LOAD A, 10
+```
+
+In this case, `LOAD` is the instruction (opcode), `A` is the first operand (the destination register), and `10` is the second operand (the value to be loaded).
+
+An assembler might convert this to machine code like so:
+
+```binary
+0001 0001 1010
+```
+
+Here, `0001` could represent the `LOAD` instruction, `0001` could represent register `A`, and `1010` is the binary representation of decimal `10`.
+
+In conclusion, creating a simple assembler involves understanding the assembly language's syntax and semantics, and the target machine's instruction set architecture. The assembler's job is to bridge the gap between these two, translating the human-readable assembly language into machine-executable instructions.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

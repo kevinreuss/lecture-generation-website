@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>44_CSS Engine Design</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# CSS Engine Design
+
+CSS engines, also known as CSS parsers, are crucial components of web browsers. They interpret and implement the visual layout instructions provided by CSS.
+
+## Basic Workflow
+
+1. **Parsing**: The engine reads raw bytes of HTML and CSS, and parses them into the respective Document Object Model (DOM) and CSS Object Model (CSSOM) trees.
+
+```css
+/* Example CSS */
+body {
+    background-color: #f0f0f2;
+}
+```
+
+2. **Render Tree Construction**: The DOM and CSSOM are combined into a render tree, which represents the visual layout of the webpage.
+
+3. **Layout**: The engine calculates the exact position and size of each object in the render tree.
+
+4. **Painting**: The final render tree is traversed, and each node is painted to the screen.
+
+## CSS Selectors
+
+CSS selectors play a big role in the efficiency of the CSS engine. Simple selectors (e.g., ID and class selectors) are fast, while more complex selectors (e.g., descendant and child selectors) can slow down the engine.
+
+```css
+/* ID selector (fast) */
+#id {}
+
+/* Descendant selector (slow) */
+ancestor descendant {}
+```
+
+## Optimizations 
+
+Modern CSS engines incorporate various optimizations to improve rendering speed:
+
+1. **Just-In-Time Compilation (JIT)**: JIT compilers, like Firefox's Stylo, compile CSS rules into more efficient code during runtime.
+
+2. **Incremental Layout**: Layout calculations are only performed for parts of the DOM affected by changes, reducing computational load.
+
+3. **GPU Acceleration**: Graphical processing units (GPUs) are used to speed up painting and compositing tasks.
+
+In conclusion, understanding how CSS engines work can help us write more efficient CSS, improving the rendering performance of our web applications.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

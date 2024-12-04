@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mini lectures - from transistor to browser</title>
+
+    <!-- Hotjar Tracking Code for mini-lectures -->
+    <script>
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 5209819, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+    </script>
+
+    <style>
+      :root {
+        --apple-gray: #86868b;
+        --apple-light-gray: #f5f5f7;
+        --apple-dark: #1d1d1f;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        background-color: white;
+        color: var(--apple-dark);
+        margin: 0;
+        padding: 0;
+      }
+
+      .navigation {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .navigation h1 {
+        font-size: 48px;
+        line-height: 1.08349;
+        font-weight: 600;
+        letter-spacing: -0.003em;
+        color: var(--apple-dark);
+        margin-bottom: 2.5rem;
+      }
+
+      .topics-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .topics-list li {
+        background: var(--apple-light-gray);
+        border-radius: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .topics-list li:hover {
+        transform: scale(1.02);
+        background: #ebebeb;
+      }
+
+      .topics-list a {
+        color: var(--apple-dark);
+        text-decoration: none;
+        font-size: 17px;
+        line-height: 1.23536;
+        font-weight: 400;
+        display: block;
+        padding: 1.5rem;
+      }
+
+      .markdown-content {
+        max-width: 980px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+
+      .markdown-content p {
+        font-size: 17px;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        color: var(--apple-gray);
+      }
+
+      @media only screen and (max-width: 734px) {
+        .navigation {
+          padding: 1rem;
+        }
+
+        .navigation h1 {
+          font-size: 40px;
+        }
+
+        .topics-list {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+
+      .topic-section {
+        margin-bottom: 3rem;
+      }
+
+      .topic-section h2 {
+        font-size: 28px;
+        line-height: 1.14286;
+        font-weight: 600;
+        letter-spacing: 0.007em;
+        color: var(--apple-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      @media only screen and (max-width: 734px) {
+        .topic-section h2 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navigation">
+      <h1>mini lectures: from transistor to browser</h1>
+
+      <div class="header-actions">
+        <a
+          href="https://forms.gle/jJhkcfLAR8d4YxK39"
+          class="header-button primary"
+          target="_blank"
+          rel="noopener"
+        >
+          Sign up to keep up to date
+        </a>
+        <a href="mailto:kevreuss@gmail.com" class="header-button secondary">
+          Feedback & ideas? Contact me
+        </a>
+      </div>
+
+      <style>
+        .header-actions {
+          margin-bottom: 3rem;
+          display: flex;
+          gap: 1rem;
+        }
+
+        .header-button {
+          font-size: 17px;
+          padding: 8px 16px;
+          border-radius: 980px;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
+        .header-button.primary {
+          background-color: #0066cc;
+          color: white;
+        }
+
+        .header-button.primary:hover {
+          background-color: #0055aa;
+        }
+
+        .header-button.secondary {
+          background-color: var(--apple-light-gray);
+          color: var(--apple-dark);
+        }
+
+        .header-button.secondary:hover {
+          background-color: #e5e5e5;
+        }
+
+        @media only screen and (max-width: 734px) {
+          .header-actions {
+            flex-direction: column;
+            margin-bottom: 2rem;
+          }
+
+          .header-button {
+            text-align: center;
+          }
+        }
+      </style>
+
+      <section class="topic-section">
+        <!-- <h2>From Transistor</h2> -->
+        <ul class="topics-list">
+          <li>
+            <a
+              href="material/1_fundamentals-of-semiconductor-physics/index.html"
+              >1: Fundamentals of Semiconductor Physics</a
+            >
+          </li>
+          <li>
+            <a href="material/2_transistor-types-and-basic-operation/index.html"
+              >2: Transistor Types and Basic Operation</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/3_building-logic-gates-from-transistors/index.html"
+              >3: Building Logic Gates from Transistors</a
+            >
+          </li>
+          <li>
+            <a href="material/4_combinational-logic-circuit-design/index.html"
+              >4: Combinational Logic Circuit Design</a
+            >
+          </li>
+          <li>
+            <a href="material/5_sequential-logic-and-flip-flops/index.html"
+              >5: Sequential Logic and Flip-Flops</a
+            >
+          </li>
+          <li>
+            <a href="material/6_registers-and-memory-cells/index.html"
+              >6: Registers and Memory Cells</a
+            >
+          </li>
+          <li>
+            <a href="material/7_clock-signals-and-timing/index.html"
+              >7: Clock Signals and Timing</a
+            >
+          </li>
+          <li>
+            <a href="material/8_arithmetic-logic-unit-alu-design/index.html"
+              >8: Arithmetic Logic Unit (ALU) Design</a
+            >
+          </li>
+          <li>
+            <a href="material/9_control-unit-implementation/index.html"
+              >9: Control Unit Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/10_basic-cpu-architecture/index.html"
+              >10: Basic CPU Architecture</a
+            >
+          </li>
+          <li>
+            <a href="material/11_memory-hierarchy-fundamentals/index.html"
+              >11: Memory Hierarchy Fundamentals</a
+            >
+          </li>
+          <li>
+            <a href="material/12_bus-systems-and-i-o/index.html"
+              >12: Bus Systems and I-O</a
+            >
+          </li>
+          <li>
+            <a href="material/13_machine-code-representation/index.html"
+              >13: Machine Code Representation</a
+            >
+          </li>
+          <li>
+            <a href="material/14_assembly-language-basics/index.html"
+              >14: Assembly Language Basics</a
+            >
+          </li>
+          <li>
+            <a href="material/15_creating-a-simple-assembler/index.html"
+              >15: Creating a Simple Assembler</a
+            >
+          </li>
+          <li>
+            <a href="material/16_basic-operating-system-concepts/index.html"
+              >16: Basic Operating System Concepts</a
+            >
+          </li>
+          <li>
+            <a href="material/17_bootloader-implementation/index.html"
+              >17: Bootloader Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/18_memory-management-unit-mmu/index.html"
+              >18: Memory Management Unit (MMU)</a
+            >
+          </li>
+          <li>
+            <a href="material/19_virtual-memory-implementation/index.html"
+              >19: Virtual Memory Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/20_process-management-basics/index.html"
+              >20: Process Management Basics</a
+            >
+          </li>
+          <li>
+            <a href="material/21_thread-implementation/index.html"
+              >21: Thread Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/22_system-calls-design/index.html"
+              >22: System Calls Design</a
+            >
+          </li>
+          <li>
+            <a href="material/23_file-system-basics/index.html"
+              >23: File System Basics</a
+            >
+          </li>
+          <li>
+            <a href="material/24_device-drivers/index.html"
+              >24: Device Drivers</a
+            >
+          </li>
+          <li>
+            <a href="material/25_compiler-front-end-design/index.html"
+              >25: Compiler Front-end Design</a
+            >
+          </li>
+          <li>
+            <a href="material/26_lexical-analysis-implementation/index.html"
+              >26: Lexical Analysis Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/27_parser-implementation/index.html"
+              >27: Parser Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/28_abstract-syntax-tree-generation/index.html"
+              >28: Abstract Syntax Tree Generation</a
+            >
+          </li>
+          <li>
+            <a href="material/29_intermediate-code-generation/index.html"
+              >29: Intermediate Code Generation</a
+            >
+          </li>
+          <li>
+            <a href="material/30_code-optimization-basics/index.html"
+              >30: Code Optimization Basics</a
+            >
+          </li>
+          <li>
+            <a href="material/31_machine-code-generation/index.html"
+              >31: Machine Code Generation</a
+            >
+          </li>
+          <li>
+            <a href="material/32_linker-and-loader-design/index.html"
+              >32: Linker and Loader Design</a
+            >
+          </li>
+          <li>
+            <a href="material/33_high-level-language-design/index.html"
+              >33: High-Level Language Design</a
+            >
+          </li>
+          <li>
+            <a href="material/34_memory-allocation-strategies/index.html"
+              >34: Memory Allocation Strategies</a
+            >
+          </li>
+          <li>
+            <a href="material/35_network-stack-fundamentals/index.html"
+              >35: Network Stack Fundamentals</a
+            >
+          </li>
+          <li>
+            <a href="material/36_physical-layer-implementation/index.html"
+              >36: Physical Layer Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/37_data-link-layer-protocols/index.html"
+              >37: Data Link Layer Protocols</a
+            >
+          </li>
+          <li>
+            <a href="material/38_ip-protocol-implementation/index.html"
+              >38: IP Protocol Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/39_tcp-protocol-implementation/index.html"
+              >39: TCP Protocol Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/40_socket-programming-basics/index.html"
+              >40: Socket Programming Basics</a
+            >
+          </li>
+          <li>
+            <a href="material/41_http-protocol-implementation/index.html"
+              >41: HTTP Protocol Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/42_browser-engine-architecture/index.html"
+              >42: Browser Engine Architecture</a
+            >
+          </li>
+          <li>
+            <a href="material/43_html-parser-implementation/index.html"
+              >43: HTML Parser Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/44_css-engine-design/index.html"
+              >44: CSS Engine Design</a
+            >
+          </li>
+          <li>
+            <a href="material/45_layout-engine-fundamentals/index.html"
+              >45: Layout Engine Fundamentals</a
+            >
+          </li>
+          <li>
+            <a href="material/46_rendering-engine-basics/index.html"
+              >46: Rendering Engine Basics</a
+            >
+          </li>
+          <li>
+            <a href="material/47_javascript-engine-design/index.html"
+              >47: JavaScript Engine Design</a
+            >
+          </li>
+          <li>
+            <a href="material/48_event-loop-implementation/index.html"
+              >48: Event Loop Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/49_dom-implementation/index.html"
+              >49: DOM Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/50_browser-storage-systems/index.html"
+              >50: Browser Storage Systems</a
+            >
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

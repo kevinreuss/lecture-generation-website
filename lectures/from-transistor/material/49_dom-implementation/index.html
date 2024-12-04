@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>49_DOM Implementation</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# DOM Implementation
+
+The Document Object Model (DOM) is a programming interface for web documents. It models an HTML (or XML) document as a tree of objects. Each object represents a part of the document and can be manipulated using various methods.
+
+## DOM Tree and Nodes
+A DOM tree is made up of nodes. There are different types of nodes, including `Element Nodes`, `Attribute Nodes`, and `Text Nodes`. For example, consider the following HTML:
+
+```html
+<p id="myPara">Hello, World!</p>
+```
+
+In the DOM tree, there are three nodes: one element node (`<p>`), one attribute node (`id="myPara"`), and one text node (`Hello, World!`).
+
+## Manipulating DOM
+
+The DOM API provides methods to manipulate these nodes. For example, you can change the text of the `myPara` element as follows:
+
+```javascript
+document.getElementById('myPara').textContent = 'Hello, DOM!';
+```
+
+## Traversing the DOM
+
+You can navigate the DOM tree using properties such as `parentNode`, `firstChild`, `lastChild`, `nextSibling`, and `previousSibling`. For example:
+
+```javascript
+let para = document.getElementById('myPara');
+let parent = para.parentNode;
+```
+
+## DOM Events
+
+DOM Elements can register events, such as `click`, `keydown`, etc., and provide a function to execute when the event occurs. For example:
+
+```javascript
+document.getElementById('myButton').addEventListener('click', function() {
+    alert('Button clicked!');
+});
+```
+
+To summarize, the DOM provides a powerful interface for interacting with web documents. It allows you to create, modify, delete, and interact with elements on a web page. It's crucial to understand how it works to create dynamic and interactive web applications.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

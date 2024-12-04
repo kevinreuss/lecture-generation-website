@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>41_HTTP Protocol Implementation</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# HTTP Protocol Implementation
+
+HTTP, or Hypertext Transfer Protocol, is a protocol for data communication. It sets rules for transmitting hypertext requests and information between server and browser.
+
+## HTTP Request Types
+
+HTTP offers various methods for different actions:
+
+- **GET**: Requests data from a specified resource.
+- **POST**: Sends data to a server to create/update a resource.
+- **PUT**: Sends data to a server to create/update a resource.
+- **DELETE**: Deletes the specified resource.
+
+More methods exist, but these are the most common.
+
+## HTTP Response Status Codes
+
+HTTP response status codes indicate whether a specific HTTP request has been successfully completed. Some commonly encountered are:
+
+- **200 OK**: The request is OK (this is the standard response for successful HTTP requests).
+- **404 Not Found**: The server can't find the requested page.
+- **500 Internal Server Error**: A generic error message, given when no more specific message is suitable.
+
+## HTTP Headers
+
+HTTP headers let the client and the server pass additional information with an HTTP request or response. They define the operating parameters of an HTTP transaction.
+
+For example, the `Content-Type` header field is used to specify the media type of the resource.
+
+```
+Content-Type: text/html
+```
+
+## Implementing HTTP Protocol with Node.js
+
+Here's a simple example of a basic HTTP server using Node.js:
+
+```javascript
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World');
+});
+
+server.listen(3000, '127.0.0.1', () => {
+  console.log('Server running at http://127.0.0.1:3000/');
+});
+```
+
+In the example, we require the http module, create a new HTTP server that sends 'Hello World' with a status code of 200 and a `Content-Type` of `text/plain`, and listen on port 3000.
+
+The `http.createServer()` method turns your computer into an HTTP server. The server object listens for requests from clients and sends back responses.
+
+## Conclusion
+
+Understanding HTTP protocol implementation is crucial for web development. It's the foundation that allows browsers and web servers to communicate. By exploring HTTP's methods, status codes, headers, and a simple implementation with Node.js, we have a deeper understanding of this essential protocol.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

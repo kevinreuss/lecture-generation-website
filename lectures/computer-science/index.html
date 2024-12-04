@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mini lectures - computer science</title>
+
+    <!-- Hotjar Tracking Code for mini-lectures -->
+    <script>
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 5209819, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+    </script>
+
+    <style>
+      :root {
+        --apple-gray: #86868b;
+        --apple-light-gray: #f5f5f7;
+        --apple-dark: #1d1d1f;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        background-color: white;
+        color: var(--apple-dark);
+        margin: 0;
+        padding: 0;
+      }
+
+      .navigation {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .navigation h1 {
+        font-size: 48px;
+        line-height: 1.08349;
+        font-weight: 600;
+        letter-spacing: -0.003em;
+        color: var(--apple-dark);
+        margin-bottom: 2.5rem;
+      }
+
+      .topics-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .topics-list li {
+        background: var(--apple-light-gray);
+        border-radius: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .topics-list li:hover {
+        transform: scale(1.02);
+        background: #ebebeb;
+      }
+
+      .topics-list a {
+        color: var(--apple-dark);
+        text-decoration: none;
+        font-size: 17px;
+        line-height: 1.23536;
+        font-weight: 400;
+        display: block;
+        padding: 1.5rem;
+      }
+
+      .markdown-content {
+        max-width: 980px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+
+      .markdown-content p {
+        font-size: 17px;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        color: var(--apple-gray);
+      }
+
+      @media only screen and (max-width: 734px) {
+        .navigation {
+          padding: 1rem;
+        }
+
+        .navigation h1 {
+          font-size: 40px;
+        }
+
+        .topics-list {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+
+      .topic-section {
+        margin-bottom: 3rem;
+      }
+
+      .topic-section h2 {
+        font-size: 28px;
+        line-height: 1.14286;
+        font-weight: 600;
+        letter-spacing: 0.007em;
+        color: var(--apple-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      @media only screen and (max-width: 734px) {
+        .topic-section h2 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navigation">
+      <h1>mini lectures - computer science</h1>
+
+      <!-- <div class="header-actions">
+        <a
+          href="https://forms.gle/jJhkcfLAR8d4YxK39"
+          class="header-button primary"
+          target="_blank"
+          rel="noopener"
+        >
+          Sign up to keep up to date
+        </a>
+        <a href="mailto:kevreuss@gmail.com" class="header-button secondary">
+          Feedback & ideas? Contact me
+        </a>
+      </div> -->
+
+      <style>
+        .header-actions {
+          margin-bottom: 3rem;
+          display: flex;
+          gap: 1rem;
+        }
+
+        .header-button {
+          font-size: 17px;
+          padding: 8px 16px;
+          border-radius: 980px;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
+        .header-button.primary {
+          background-color: #0066cc;
+          color: white;
+        }
+
+        .header-button.primary:hover {
+          background-color: #0055aa;
+        }
+
+        .header-button.secondary {
+          background-color: var(--apple-light-gray);
+          color: var(--apple-dark);
+        }
+
+        .header-button.secondary:hover {
+          background-color: #e5e5e5;
+        }
+
+        @media only screen and (max-width: 734px) {
+          .header-actions {
+            flex-direction: column;
+            margin-bottom: 2rem;
+          }
+
+          .header-button {
+            text-align: center;
+          }
+        }
+      </style>
+
+      <section class="topic-section">
+        <h2>Web Development & APIs</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="material/http-2-and-http-3-protocol-enhancements/index.html"
+              >HTTP-2 and HTTP-3 Protocol Enhancements</a
+            >
+          </li>
+          <li>
+            <a href="material/cross-origin-resource-sharing-cors/index.html"
+              >Cross-Origin Resource Sharing (CORS)</a
+            >
+          </li>
+          <li>
+            <a href="material/graphql-vs-rest-api-design/index.html"
+              >GraphQL vs REST API Design</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/server-side-rendering-ssr-vs-client-side-rendering-csr/index.html"
+              >Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/websocket-communication-for-real-time-applications/index.html"
+              >WebSocket Communication for Real-Time Applications</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/client-side-storage-with-indexeddb-and-localstorage/index.html"
+              >Client-Side Storage with IndexedDB and LocalStorage</a
+            >
+          </li>
+          <li>
+            <a href="material/reverse-proxy-configuration-with-nginx/index.html"
+              >Reverse Proxy Configuration with NGINX</a
+            >
+          </li>
+          <li>
+            <a href="material/middleware-design-patterns-in-nodejs/index.html"
+              >Middleware Design Patterns in Node.js</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Software Architecture & Design Patterns</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/microservices-architecture-and-design/index.html"
+              >Microservices Architecture and Design</a
+            >
+          </li>
+          <li>
+            <a href="material/event-driven-architecture/index.html"
+              >Event-Driven Architecture</a
+            >
+          </li>
+          <li>
+            <a href="material/domain-driven-design-principles/index.html"
+              >Domain-Driven Design Principles</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/design-by-contract-dbc-in-software-engineering/index.html"
+              >Design by Contract (DbC) in Software Engineering</a
+            >
+          </li>
+          <li>
+            <a href="material/dependency-injection-patterns/index.html"
+              >Dependency Injection Patterns</a
+            >
+          </li>
+          <li>
+            <a href="material/singleton-and-factory-patterns/index.html"
+              >Singleton and Factory Patterns</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>DevOps & Cloud</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/docker-containers-and-orchestration/index.html"
+              >Docker Containers and Orchestration</a
+            >
+          </li>
+          <li>
+            <a href="material/kubernetes-pod-and-cluster-management/index.html"
+              >Kubernetes Pod and Cluster Management</a
+            >
+          </li>
+          <li>
+            <a href="material/kubernetes-service-mesh-with-istio/index.html"
+              >Kubernetes Service Mesh with Istio</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/continuous-integration-continuous-deployment-ci-cd-pipelines/index.html"
+              >Continuous Integration-Continuous Deployment (CI-CD) Pipelines</a
+            >
+          </li>
+          <li>
+            <a href="material/cloud-native-application-development/index.html"
+              >Cloud-Native Application Development</a
+            >
+          </li>
+          <li>
+            <a href="material/resource-allocation-in-cloud-computing/index.html"
+              >Resource Allocation in Cloud Computing</a
+            >
+          </li>
+          <li>
+            <a href="material/horizontal-vs-vertical-scaling/index.html"
+              >Horizontal vs Vertical Scaling</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Programming Fundamentals</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="material/big-o-notation-and-algorithm-efficiency/index.html"
+              >Big O Notation and Algorithm Efficiency</a
+            >
+          </li>
+          <li>
+            <a href="material/concurrent-programming-with-threads/index.html"
+              >Concurrent Programming with Threads</a
+            >
+          </li>
+          <li>
+            <a href="material/multi-threaded-programming-in-java/index.html"
+              >Multi-Threaded Programming in Java</a
+            >
+          </li>
+          <li>
+            <a href="material/asynchronous-i-o-models/index.html"
+              >Asynchronous I-O Models</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/type-inference-in-typescript-and-kotlin/index.html"
+              >Type Inference in TypeScript and Kotlin</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/functional-programming-with-haskell-and-lisp/index.html"
+              >Functional Programming with Haskell and Lisp</a
+            >
+          </li>
+          <li>
+            <a href="material/error-handling-and-fault-tolerance/index.html"
+              >Error Handling and Fault Tolerance</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Data Structures & Algorithms</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/binary-search-trees-and-avl-trees/index.html"
+              >Binary Search Trees and AVL Trees</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/sorting-algorithms-quicksort-merge-sort-and-radix-sort/index.html"
+              >Sorting Algorithms: Quicksort, Merge Sort, and Radix Sort</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/bloom-filters-and-probabilistic-data-structures/index.html"
+              >Bloom Filters and Probabilistic Data Structures</a
+            >
+          </li>
+          <li>
+            <a href="material/lru-and-lfu-caching-algorithms/index.html"
+              >LRU and LFU Caching Algorithms</a
+            >
+          </li>
+          <li>
+            <a href="material/sparse-and-dense-matrix-multiplication/index.html"
+              >Sparse and Dense Matrix Multiplication</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Database & Data Management</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/real-time-database-management/index.html"
+              >Real-Time Database Management</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/object-relational-mapping-orm-frameworks/index.html"
+              >Object-Relational Mapping (ORM) Frameworks</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/data-serialization-formats-json-xml-protocol-buffers/index.html"
+              >Data Serialization Formats: JSON, XML, Protocol Buffers</a
+            >
+          </li>
+          <li>
+            <a href="material/data-lake-vs-data-warehouse/index.html"
+              >Data Lake vs Data Warehouse</a
+            >
+          </li>
+          <li>
+            <a href="material/caching-mechanisms-in-web-applications/index.html"
+              >Caching Mechanisms in Web Applications</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Security & Authentication</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="material/web-security-protocols-oauth-openid-connect/index.html"
+              >Web Security Protocols: OAuth, OpenID Connect</a
+            >
+          </li>
+          <li>
+            <a href="material/oauth-20-authorization-framework/index.html"
+              >OAuth 2.0 Authorization Framework</a
+            >
+          </li>
+          <li>
+            <a href="material/multi-factor-authentication-techniques/index.html"
+              >Multi-Factor Authentication Techniques</a
+            >
+          </li>
+          <li>
+            <a href="material/data-encryption-standards-aes-and-rsa/index.html"
+              >Data Encryption Standards: AES and RSA</a
+            >
+          </li>
+          <li>
+            <a href="material/hashing-algorithms-md5-sha-256/index.html"
+              >Hashing Algorithms: MD5, SHA-256</a
+            >
+          </li>
+          <li>
+            <a href="material/diffie-hellman-key-exchange/index.html"
+              >Diffie-Hellman Key Exchange</a
+            >
+          </li>
+          <li>
+            <a href="material/zero-knowledge-proofs-in-cryptography/index.html"
+              >Zero-Knowledge Proofs in Cryptography</a
+            >
+          </li>
+          <li>
+            <a href="material/quantum-cryptography-basics/index.html"
+              >Quantum Cryptography Basics</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Artificial Intelligence & Machine Learning</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/neural-network-architecture-types/index.html"
+              >Neural Network Architecture Types</a
+            >
+          </li>
+          <li>
+            <a href="material/backpropagation-in-neural-networks/index.html"
+              >Backpropagation in Neural Networks</a
+            >
+          </li>
+          <li>
+            <a href="material/machine-learning-model-deployment/index.html"
+              >Machine Learning Model Deployment</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/natural-language-processing-with-transformers/index.html"
+              >Natural Language Processing with Transformers</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/temporal-difference-learning-in-reinforcement-learning/index.html"
+              >Temporal Difference Learning in Reinforcement Learning</a
+            >
+          </li>
+          <li>
+            <a href="material/genetic-algorithms-in-optimization/index.html"
+              >Genetic Algorithms in Optimization</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Systems & Low-Level Programming</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/memory-management-techniques/index.html"
+              >Memory Management Techniques</a
+            >
+          </li>
+          <li>
+            <a href="material/dynamic-and-static-memory-allocation/index.html"
+              >Dynamic and Static Memory Allocation</a
+            >
+          </li>
+          <li>
+            <a href="material/virtual-memory-concepts/index.html"
+              >Virtual Memory Concepts</a
+            >
+          </li>
+          <li>
+            <a href="material/garbage-collection-strategies/index.html"
+              >Garbage Collection Strategies</a
+            >
+          </li>
+          <li>
+            <a href="material/context-switching-in-operating-systems/index.html"
+              >Context Switching in Operating Systems</a
+            >
+          </li>
+          <li>
+            <a href="material/real-time-operating-systems-rtos/index.html"
+              >Real-Time Operating Systems (RTOS)</a
+            >
+          </li>
+          <li>
+            <a href="material/deadlock-avoidance-techniques/index.html"
+              >Deadlock Avoidance Techniques</a
+            >
+          </li>
+          <li>
+            <a href="material/file-system-design-and-ext4-vs-ntfs/index.html"
+              >File System Design and EXT4 vs NTFS</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Performance & Optimization</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/simd-and-mimd-processing/index.html"
+              >SIMD and MIMD Processing</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/simd-optimization-for-high-performance-code/index.html"
+              >SIMD Optimization for High-Performance Code</a
+            >
+          </li>
+          <li>
+            <a href="material/simd-vectorization-in-modern-cpus/index.html"
+              >SIMD Vectorization in Modern CPUs</a
+            >
+          </li>
+          <li>
+            <a href="material/compiler-optimization-techniques/index.html"
+              >Compiler Optimization Techniques</a
+            >
+          </li>
+          <li>
+            <a href="material/gpu-programming-with-cuda-and-opencl/index.html"
+              >GPU Programming with CUDA and OpenCL</a
+            >
+          </li>
+          <li>
+            <a href="material/pipelining-in-cpu-design/index.html"
+              >Pipelining in CPU Design</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Distributed Systems & Big Data</h2>
+        <ul class="topics-list">
+          <li>
+            <a
+              href="material/distributed-computing-with-apache-spark/index.html"
+              >Distributed Computing with Apache Spark</a
+            >
+          </li>
+          <li>
+            <a href="material/mapreduce-in-big-data-processing/index.html"
+              >MapReduce in Big Data Processing</a
+            >
+          </li>
+          <li>
+            <a href="material/kafka-and-rabbitmq-messaging-systems/index.html"
+              >Kafka and RabbitMQ Messaging Systems</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/blockchain-and-distributed-ledger-technology/index.html"
+              >Blockchain and Distributed Ledger Technology</a
+            >
+          </li>
+          <li>
+            <a href="material/task-scheduling-with-apache-airflow/index.html"
+              >Task Scheduling with Apache Airflow</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Networking & Protocols</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/tcp-ip-stack-implementation/index.html"
+              >TCP-IP Stack Implementation</a
+            >
+          </li>
+          <li>
+            <a href="material/network-address-translation-nat/index.html"
+              >Network Address Translation (NAT)</a
+            >
+          </li>
+          <li>
+            <a href="material/ipv4-vs-ipv6-addressing/index.html"
+              >IPv4 vs IPv6 Addressing</a
+            >
+          </li>
+          <li>
+            <a href="material/dns-load-balancing/index.html"
+              >DNS Load Balancing</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/load-balancing-algorithms-round-robin-least-connections/index.html"
+              >Load Balancing Algorithms: Round Robin, Least Connections</a
+            >
+          </li>
+          <li>
+            <a href="material/software-defined-networking-sdn/index.html"
+              >Software-Defined Networking (SDN)</a
+            >
+          </li>
+          <li>
+            <a href="material/mqtt-protocol-for-iot/index.html"
+              >MQTT Protocol for IoT</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/message-queuing-telemetry-transport-mqtt/index.html"
+              >Message Queuing Telemetry Transport (MQTT)</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Graphics & Multimedia</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/shader-programming-in-graphics/index.html"
+              >Shader Programming in Graphics</a
+            >
+          </li>
+          <li>
+            <a href="material/real-time-rendering-techniques/index.html"
+              >Real-Time Rendering Techniques</a
+            >
+          </li>
+          <li>
+            <a href="material/opengl-and-vulkan-api-for-graphics/index.html"
+              >OpenGL and Vulkan API for Graphics</a
+            >
+          </li>
+          <li>
+            <a href="material/bresenhams-line-algorithm/index.html"
+              >Bresenham's Line Algorithm</a
+            >
+          </li>
+          <li>
+            <a href="material/real-time-audio-processing-algorithms/index.html"
+              >Real-Time Audio Processing Algorithms</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/digital-signal-processing-dsp-in-embedded-systems/index.html"
+              >Digital Signal Processing (DSP) in Embedded Systems</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section class="topic-section">
+        <h2>Specialized Computing</h2>
+        <ul class="topics-list">
+          <li>
+            <a href="material/quantum-computing-algorithms/index.html"
+              >Quantum Computing Algorithms</a
+            >
+          </li>
+          <li>
+            <a href="material/fpga-programming-and-applications/index.html"
+              >FPGA Programming and Applications</a
+            >
+          </li>
+          <li>
+            <a href="material/constraint-satisfaction-problems-csp/index.html"
+              >Constraint Satisfaction Problems (CSP)</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/linear-programming-in-optimization-problems/index.html"
+              >Linear Programming in Optimization Problems</a
+            >
+          </li>
+          <li>
+            <a
+              href="material/finite-state-machines-in-automata-theory/index.html"
+              >Finite State Machines in Automata Theory</a
+            >
+          </li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

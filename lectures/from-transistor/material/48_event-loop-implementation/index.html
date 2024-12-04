@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>48_Event Loop Implementation</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Event Loop Implementation
+
+The Event Loop is a critical software engineering concept, especially in JavaScript. It's the secret behind JavaScript's asynchronous programming.
+
+## Event Loop Basics
+
+The Event Loop's primary function is to monitor the Call Stack and the Callback Queue. If the Call Stack is empty, it will take the first event from the queue and push it to the Call Stack, which effectively runs it.
+
+```javascript
+console.log('Hello'); // First item for the call stack
+setTimeout(() => { // Placed in the Web APIs and later moved to the Callback Queue
+  console.log('There'); 
+}, 0);
+console.log('World'); // Second item for the call stack
+```
+In this example, the output would be "Hello", "World", "There" due to the Event Loop's nature.
+
+## Event Loop in Node.js
+
+Node.js is a fantastic example of the Event Loop in action. Node.js uses the libuv library to implement the Event Loop. 
+
+```javascript
+const fs = require('fs');
+fs.readFile('./file.txt', () => { // Moved to Web APIs and later to the Callback Queue
+  console.log('Read file'); 
+});
+console.log('Started reading file'); // First item for the call stack
+```
+Here, 'Started reading file' will output before 'Read file'.
+
+## Microtasks and Macrotasks
+
+The Event Loop gives priority to process.nextTick and Promises (microtasks) over other tasks (macrotasks like setTimeout, setImmediate). 
+
+```javascript
+console.log('Start'); // First item for the call stack
+setTimeout(() => { console.log('setTimeout'); }, 0); // Macrotask
+setImmediate(() => { console.log('setImmediate'); }); // Macrotask
+Promise.resolve().then(() => console.log('Promise')); // Microtask
+process.nextTick(() => console.log('nextTick')); // Microtask
+console.log('End'); // Second item for the call stack
+```
+This outputs: "Start", "End", "nextTick", "Promise", "setTimeout", "setImmediate". 
+
+In conclusion, the Event Loop is a fundamental part of how JavaScript operates. A deep understanding allows for better handling of JavaScript's asynchronous nature.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

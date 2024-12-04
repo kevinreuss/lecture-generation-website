@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>12_Bus Systems and I-O</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Bus Systems and I/O
+
+Bus systems are fundamental to data communication in computing systems, especially when it comes to Input/Output (I/O) operations. 
+
+## Bus Systems
+
+A bus system is a communication system that transfers data between components inside a computer, or between computers. It's comprised of power lines, control lines, and data lines. 
+
+Three types of bus systems commonly found in computers include:
+
+1. **Data Bus** - A system that transfers data between the processor, memory, and I/O devices. Its width (in bits) is crucial since it affects the overall performance of the system.
+
+2. **Address Bus** - It carries the addresses of the memory locations that the processor wants to access in order to read or write data.
+
+3. **Control Bus** - This system carries control signals which include interrupts, ready signal, direction of data flow, etc. 
+
+## I/O Systems
+
+I/O systems facilitate the communication between a computer and the outer world (users, networks, or other computers). The I/O system can be organized in several ways:
+
+- **Programmed I/O** - The data handling is done by the processor. It's simple to implement but can consume a lot of CPU time.
+- **Interrupt-driven I/O** - The processor is interrupted when data is available. This is more efficient than programmed I/O as the processor can perform other tasks.
+
+- **Direct Memory Access (DMA)** - A special hardware device manages the data transfer. This is the most efficient, as it allows data transfer with minimal CPU intervention.
+
+For instance, in Python, the `open()` function is used for file I/O operations. It takes a file path and mode (`r` for read, `w` for write) as inputs.
+
+```python
+file = open('example.txt', 'r')
+content = file.read()
+print(content)
+file.close()
+```
+
+Here, the `open()` function returns a file object, and is most commonly used with two arguments: `open(filename, mode)`.
+
+In summary, bus systems and I/O operations play an essential role in computer architecture, ensuring efficient communication and data transfer within the system and with the external world.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

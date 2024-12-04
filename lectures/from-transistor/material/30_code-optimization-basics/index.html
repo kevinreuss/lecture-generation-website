@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>30_Code Optimization Basics</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Code Optimization Basics
+
+When we talk about **Code Optimization**, we are fundamentally discussing two primary aspects: **Performance Optimization** and **Memory Optimization**. 
+
+## Performance Optimization
+
+Performance optimization aims at reducing the execution time of your code. 
+
+### Loop Unrolling 
+
+Consider this loop:
+
+```c++
+for(int i = 0; i < 100; i++){
+    // Some operation
+}
+```
+Loop unrolling would transform this to:
+```c++
+for(int i = 0; i < 100; i+=10){
+    // Operation 1
+    // Operation 2
+    // Operation 3
+    // ...
+    // Operation 10
+}
+```
+This reduces the overhead of loop counter increment and condition check.
+
+### Function Inlining 
+
+Function calls can be expensive in terms of time. Instead, if the function body is small, the function call can be replaced with the function body. This is known as **Function Inlining**.
+
+```c++
+inline void fun() {
+    // Small amount of code
+}
+```
+The `inline` keyword suggests to the compiler that it should attempt to embed this function's code in place of any call to it.
+
+## Memory Optimization
+
+Memory optimization is about reducing your program's memory footprint.
+
+### Variable Reuse
+
+Reusing variables can save memory. Instead of creating a new variable every time, try to use the existing ones.
+
+```c++
+int res = doSomething();
+// Some code where res is not used
+res = doSomethingElse();
+```
+
+### Efficient Data Structures
+
+Efficient use of data structures can greatly reduce memory usage. For instance, using bit fields in a structure or using an `enum` instead of a string for state management.
+
+Remember, these are the basics. Code optimization is a vast topic and can get very complex depending on the language, platform, and problem at hand.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

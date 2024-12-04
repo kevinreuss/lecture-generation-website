@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>43_HTML Parser Implementation</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# HTML Parser Implementation
+
+HTML parsing is the process of analyzing HTML code and generating a structured representation, typically a tree, which can be used by the rest of a web rendering engine. 
+
+## Two Main Parsing Models
+
+1. **DOM-based HTML Parsing** - It creates a tree structure known as the Document Object Model (DOM) for the HTML document. The DOM can then be manipulated or queried for information. DOM parsers are generally used in browsers. 
+
+```javascript
+let parser = new DOMParser();
+let doc = parser.parseFromString('<h1>Hello World</h1>', 'text/html');
+console.log(doc.body); // Output: <body><h1>Hello World</h1></body>
+```
+
+2. **SAX-based HTML Parsing** - SAX (Simple API for XML) is an event-driven online algorithm for parsing XML documents. SAX parsers work better for situations where you only need to handle the HTML data as it comes in, and you do not need to build up an in-memory representation of the document.
+
+```java
+public class MyHandler extends DefaultHandler {
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        System.out.println("Start Element :" + qName);
+    }
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        System.out.println("End Element :" + qName);
+    }
+}
+```
+
+## Tokenization
+
+HTML parsing starts with tokenization. A tokenizer breaks the input into the following tokens: StartTag, EndTag, Comment, Character, Doctype, etc. This is typically implemented using a finite state machine.
+
+```python
+from html.parser import HTMLParser
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print("Encountered a start tag:", tag)
+```
+
+## Tree Construction
+
+The tree construction stage takes tokens from the tokenizer and processes them to build up the DOM. The process is guided by the HTML specification and involves creating and inserting nodes into the tree in response to tokens.
+
+```python
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        print("Start tag:", tag)
+        for attr in attrs:
+            print("     attr:", attr)
+    def handle_endtag(self, tag):
+        print("End tag  :", tag)
+```
+
+## Error Handling
+
+Real-world HTML parsers must also be prepared to handle ill-formed HTML, correcting errors on the fly. This error handling process is also specified in the HTML standard.
+
+Remember, HTML parsing is a complex topic, and this is just a brief overview. The actual implementation of an HTML parser involves many more details and edge cases.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

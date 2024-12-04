@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>10_Basic CPU Architecture</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Basic CPU Architecture
+
+CPU, or Central Processing Unit, is the brain of a computer. Understanding its basic architecture is essential for optimizing software performance.
+
+## Components of CPU
+
+A CPU consists of three main parts:
+
+1. **Arithmetic Logic Unit (ALU):** Performs arithmetic and logical operations.
+
+2. **Control Unit (CU):** Manages the flow of data through the CPU.
+
+3. **Registers:** Small storage areas for temporary data.
+
+### Arithmetic Logic Unit (ALU)
+
+The ALU performs basic arithmetic operations such as addition, subtraction, multiplication, and division. It also performs logical operations such as AND, OR, NOT, and XOR.
+
+### Control Unit (CU)
+
+The Control Unit manages and synchronizes all components of the computer. It decodes instructions and transforms them into a series of signals that control other parts of the computer. The CU uses a clock signal to keep operations in sync.
+
+### Registers
+
+Registers store temporary data during execution. There are several types of registers in a CPU, including:
+
+- **Data registers:** Store data for operations.
+
+- **Address registers:** Store memory addresses for data.
+
+- **Condition registers:** Store status information about an operation.
+
+## CPU Cycle
+
+A basic CPU operation, or cycle, consists of the following stages:
+
+1. **Fetch:** Retrieve an instruction from memory.
+
+2. **Decode:** Decode the instruction into actions.
+
+3. **Execute:** Execute the actions.
+
+4. **Writeback:** Write the results to memory.
+
+## Von Neumann Architecture
+
+Most modern CPUs follow the Von Neumann architecture. This architecture segregates the CPU from physical memory. Instructions and data are stored in the same memory, but they are fetched and processed sequentially.
+
+## Example: MIPS Architecture
+
+The MIPS architecture is a simple example of a CPU architecture. Here is a MIPS assembly code example:
+
+```asm
+add $t0, $s1, $s2   # $t0 = $s1 + $s2
+```
+
+In this example, the CPU fetches the instruction, decodes it into an add operation, executes the operation with the values in registers `$s1` and `$s2`, and writes the result back into register `$t0`.
+
+In conclusion, understanding basic CPU architecture allows you to understand how your software interacts with hardware at a lower level, potentially helping you to optimize your software for better performance.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

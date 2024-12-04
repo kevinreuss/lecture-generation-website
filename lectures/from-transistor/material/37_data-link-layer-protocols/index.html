@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>37_Data Link Layer Protocols</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Data Link Layer Protocols
+
+Data Link Layer protocols are responsible for data transmission between nodes on the same network segment. These protocols define how devices identify and communicate with each other on the physical layer.
+
+## Ethernet
+
+Ethernet is the most commonly used Data Link Layer protocol. It uses a MAC (Media Access Control) address to identify devices and employs CSMA/CD (Carrier Sense Multiple Access with Collision Detection) mechanism for data transmission. 
+
+Ethernet frames have a specific structure: preamble, destination MAC, source MAC, EtherType (specifies protocol type for the payload), payload, and Frame Check Sequence for error detection.
+
+## PPP (Point-to-Point Protocol)
+
+PPP is used for direct connections between two nodes. It provides a method for encapsulating multi-protocol packets over point-to-point links. PPP also uses a form of checksum for error checking.
+
+## HDLC (High-Level Data Link Control)
+
+HDLC is a bit-oriented synchronous Data Link Layer protocol developed by the ISO. HDLC provides both connection-oriented and connectionless service.
+
+The frame structure of HDLC includes a Flag (indicates start and end of the frame), Address (destination address), Control (frame type and functions), Data, and FCS (Frame Check Sequence).
+
+## IEEE 802.11 (Wireless LAN)
+
+IEEE 802.11 is a set of Data Link Layer protocols that define the set of media access control (MAC) and physical layer (PHY) specifications for implementing wireless local area network (WLAN) communication in various frequencies.
+
+The frame structure includes Frame Control, Duration, Address1, Address2, Address3, Sequence Control, Address4, Payload, and FCS. 
+
+While there's no code involved in these protocols, understanding their frame structures and operation mechanisms is crucial. Each protocol has its use cases and understanding them allows you to make an informed decision while designing and troubleshooting network systems.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>20_Process Management Basics</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Process Management Basics
+
+Process management is a key aspect of operating systems, dealing with the creation, scheduling, termination, and coordination of processes. 
+
+## Process Creation
+
+Processes can be created by other processes through system calls such as `fork()`. The child process inherits properties from its parent and executes concurrently with the parent.
+
+```c
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+int main()
+{
+    fork();
+    printf("Hello World\n");
+    return 0;
+}
+```
+In this example, 'Hello World' is printed twice because the `fork()` call creates a new process that also executes the `printf()` statement.
+
+## Process States
+
+A process can be in one of the following states:
+
+- **New:** The process is being created.
+- **Running:** Instructions are being executed.
+- **Waiting:** The process is waiting for some event to occur.
+- **Ready:** The process is waiting to be assigned to a processor.
+- **Terminated:** The process has finished execution.
+
+## Process Control Block (PCB)
+
+Each process is represented in the operating system by a process control block (PCB), also known as a task control block. It contains important information about the specific process including:
+
+- **Process State:** The state of the process (as described above).
+- **Program Counter:** The address of the next instruction to be executed for this process.
+- **CPU Registers:** They include accumulators, index registers, stack pointers, and general-purpose registers, plus any condition-code information.
+
+## Process Scheduling
+
+The operating system schedules processes based on a particular algorithm like First-Come-First-Serve (FCFS), Shortest Job Next (SJN), or Round Robin (RR). The choice of the scheduling algorithm impacts the process performance.
+
+## Process Termination
+
+A process terminates when it finishes executing its final statement and asks the operating system to delete it with the `exit()` system call. Alternatively, a process can be killed by another using a `kill()` system call.
+```
+kill(pid, SIGKILL);
+```
+In this example, the `kill()` function sends the `SIGKILL` signal to the process with the process ID `pid`, causing that process to terminate immediately.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

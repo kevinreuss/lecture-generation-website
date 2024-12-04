@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>42_Browser Engine Architecture</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Browser Engine Architecture
+
+The browser engine, also known as rendering engine or layout engine, is a core software component that takes HTML, CSS, and JavaScript and converts them into a visual representation displayed on your screen.
+
+Two of the most widely used browser engines today are WebKit (used by Safari) and Blink (used by Chrome and Edge). Firefox uses an engine called Gecko.
+
+## Main Components
+
+The main components of a browser engine include:
+
+### 1. Rendering Engine
+
+The rendering engine parses the HTML document into a Document Object Model (DOM) tree. It then processes the CSS and applies the styles to the DOM tree. The result is a render tree, which is then painted onto the screen.
+
+### 2. JavaScript Interpreter
+
+The JavaScript interpreter executes the JavaScript code embedded in the webpage. Most modern browsers use a Just-In-Time (JIT) compilation strategy for better performance.
+
+## Processing Model
+
+The processing model of a browser engine generally consists of a main thread that handles most of the browser tasks, and several background threads for tasks like network operations, image decoding, and garbage collection.
+
+Here's a simplified illustration of the processing model:
+
+```js
+// Main Thread
+function mainThread() {
+  while (true) {
+    handleEvents(); // e.g., user input, timer events
+    updateAnimations();
+    if (needsRepaint) {
+      render();
+    }
+  }
+}
+
+// Background Thread
+function backgroundThread() {
+  while (true) {
+    handleNetworkRequests();
+    decodeImages();
+    performGarbageCollection();
+  }
+}
+```
+
+## Event Loop
+
+At the heart of the browser engine is the event loop, which is responsible for picking events from the event queue and pushing them to the main thread's stack when it's empty. This is what makes JavaScript effectively single-threaded, despite the presence of web workers and other background threads.
+
+## Conclusion
+
+Understanding the architecture of the browser engine is vital for any software engineer working on web technologies. It helps us write more efficient code and take advantage of the browser's capabilities.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
