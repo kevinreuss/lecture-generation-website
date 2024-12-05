@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to Robotics: Building Simple Systems</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Introduction to Robotics: Building Simple Systems
+
+Robotics is a multidisciplinary field involving mechanical engineering, electronics, computer science, artificial intelligence, and more. In this discussion, we will focus on building simple robotic systems.
+
+## Basic Components of a Robotic System
+
+A simple robotic system is composed of sensors, actuators, and a control unit. 
+
+- **Sensors**: These are devices that measure physical quantities and convert them into signals. For example, a temperature sensor in a robot might measure the heat of an object and convert it into an electrical signal.
+
+- **Actuators**: These are devices that move or control a mechanism in the robot. For example, motors that move the robot's wheels.
+
+- **Control Unit**: This is a computer or microcontroller that processes the signals from the sensors and controls the actuators.
+
+## Building a Simple Robotic System
+
+Consider a basic obstacle-avoiding robot. Here, we will use an Arduino board as the control unit, an ultrasonic sensor to detect obstacles, and DC motors as actuators.
+
+### Ultrasonic Sensor
+
+The ultrasonic sensor emits high-frequency sound waves and measures the time taken for the echo to return, calculating the distance of the object. The sensor has two main components: the transmitter (sends the sound waves) and the receiver (receives the echo).
+
+### Arduino Control Unit
+
+The Arduino receives the distance data from the ultrasonic sensor. If the distance is less than a certain threshold, the Arduino sends a signal to the motor drivers to change the robot's direction.
+
+### Motor Driver and DC Motors
+
+Motor drivers receive signals from the Arduino and control the speed and direction of the motors. If an obstacle is detected, the motor driver changes the direction of the motors, causing the robot to turn.
+
+### Code Snippet
+
+Here is a simple Arduino code that uses an ultrasonic sensor to avoid obstacles:
+
+```c++
+#define trigPin 9
+#define echoPin 10
+#define motor1 6
+#define motor2 7
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(motor1, OUTPUT);
+  pinMode(motor2, OUTPUT);
+}
+
+void loop() {
+  long duration, distance;
+  digitalWrite(trigPin, LOW);  
+  delayMicroseconds(2); 
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10); 
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = (duration/2) / 29.1;
+  
+  if (distance < 20) { // if distance is less than 20cm
+    digitalWrite(motor1, HIGH); // turn right
+    digitalWrite(motor2, LOW); 
+  } else {
+    digitalWrite(motor1, LOW); // move forward
+    digitalWrite(motor2, HIGH);
+  }
+}
+```
+This code initiates the ultrasonic sensor and the motors. It then continuously checks for obstacles, and if an object is detected within 20cm, it turns the robot right.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

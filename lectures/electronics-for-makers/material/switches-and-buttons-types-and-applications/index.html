@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Switches and Buttons: Types and Applications</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Switches and Buttons: Types and Applications
+
+Switches and buttons are essential components in many software applications, especially those involving user interface (UI) and user experience (UX). There are several types of switches and buttons, each with their unique characteristics and applications.
+
+## Push Buttons
+
+Push buttons are the most common type. They're typically used for momentary processes, such as submitting a form or starting an operation. In most programming languages, you can create and customize push buttons. Here's an example in HTML:
+
+```html
+<button type="submit">Submit</button>
+```
+
+## Radio Buttons
+
+Radio buttons allow users to select one option from a list. They're used when you want to ensure the user selects only one choice from a set. Here's an example in HTML:
+
+```html
+<input type="radio" id="option1" name="option">
+<label for="option1">Option 1</label><br>
+<input type="radio" id="option2" name="option">
+<label for="option2">Option 2</label><br>
+```
+
+## Checkboxes
+
+Checkboxes are similar to radio buttons, but they allow users to select multiple options. They're used when you want to offer the user multiple choices. Here's an example in HTML:
+
+```html
+<input type="checkbox" id="option1" name="option1" value="Option1">
+<label for="option1"> Option 1</label><br>
+<input type="checkbox" id="option2" name="option2" value="Option2">
+<label for="option2"> Option 2</label><br>
+```
+
+## Toggle Switches
+
+Toggle switches are used to enable or disable features. Their on/off nature makes them perfect for settings or preferences. Here's an example in HTML and CSS:
+
+```html
+<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+```
+```css
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+```
+
+Remember to always consider the use case when deciding which button or switch to use. Matching the control type to the user's expectation can greatly enhance UX.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

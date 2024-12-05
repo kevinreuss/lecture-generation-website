@@ -1574,28 +1574,30 @@
 
       function updateUI() {
         const completedLectures = JSON.parse(
-          localStorage.getItem("completedLectures")
+          localStorage.getItem("completedLectures") || "[]"
         );
-        const progressCounter = document.getElementById("progress-counter");
-        progressCounter.textContent = completedLectures.length;
+
+        // Update the progress counter
+        document.getElementById("progress-counter").textContent =
+          completedLectures.length;
 
         document.querySelectorAll(".mark-button").forEach((button) => {
           const lectureId = button.dataset.lectureId;
-          const listItem = button.closest("li");
           const checkIcon = button.querySelector(".check-icon");
           const plusIcon = button.querySelector(".plus-icon");
           const buttonText = button.querySelector(".button-text");
+          const listItem = button.closest("li"); // Get the parent li element
 
           if (completedLectures.includes(lectureId)) {
-            buttonText.textContent = "Mark as unread";
-            checkIcon.style.display = "none";
+            checkIcon.style.display = "block";
             plusIcon.style.display = "none";
-            listItem.classList.add("completed");
+            buttonText.textContent = "Completed";
+            listItem.classList.add("completed"); // Add completed class to li
           } else {
-            buttonText.textContent = "Mark as read";
             checkIcon.style.display = "none";
             plusIcon.style.display = "block";
-            listItem.classList.remove("completed");
+            buttonText.textContent = "Mark as read";
+            listItem.classList.remove("completed"); // Remove completed class from li
           }
         });
       }
@@ -1606,15 +1608,15 @@
           e.preventDefault();
           const lectureId = button.dataset.lectureId;
           const completedLectures = JSON.parse(
-            localStorage.getItem("completedLectures")
+            localStorage.getItem("completedLectures") || "[]"
           );
 
-          if (completedLectures.includes(lectureId)) {
-            // Remove from completed
-            const index = completedLectures.indexOf(lectureId);
+          const index = completedLectures.indexOf(lectureId);
+          if (index !== -1) {
+            // Remove from completed if already exists
             completedLectures.splice(index, 1);
           } else {
-            // Add to completed
+            // Add to completed if doesn't exist
             completedLectures.push(lectureId);
           }
 

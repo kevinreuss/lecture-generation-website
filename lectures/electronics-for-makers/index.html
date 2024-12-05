@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mini lectures - from transistor to browser</title>
+
+    <!-- Hotjar Tracking Code for mini-lectures -->
+    <script>
+      (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:5209819,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+
+    <style>
+      :root {
+        --apple-gray: #86868b;
+        --apple-light-gray: #f5f5f7;
+        --apple-dark: #1d1d1f;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+          "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        background-color: white;
+        color: var(--apple-dark);
+        margin: 0;
+        padding: 0;
+      }
+
+      .navigation {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .navigation h1 {
+        font-size: 48px;
+        line-height: 1.08349;
+        font-weight: 600;
+        letter-spacing: -0.003em;
+        color: var(--apple-dark);
+        margin-bottom: 2.5rem;
+      }
+
+      .topics-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+      }
+
+      .topics-list li {
+        background: var(--apple-light-gray);
+        border-radius: 18px;
+        transition: all 0.3s ease;
+      }
+
+      .topics-list li:hover {
+        transform: scale(1.02);
+        background: #ebebeb;
+      }
+
+      .topics-list a {
+        color: var(--apple-dark);
+        text-decoration: none;
+        font-size: 17px;
+        line-height: 1.23536;
+        font-weight: 400;
+        display: block;
+        padding: 1.5rem;
+      }
+
+      .markdown-content {
+        max-width: 980px;
+        margin: 2rem auto;
+        padding: 2rem;
+      }
+
+      .markdown-content p {
+        font-size: 17px;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        color: var(--apple-gray);
+      }
+
+      @media only screen and (max-width: 734px) {
+        .navigation {
+          padding: 1rem;
+        }
+
+        .navigation h1 {
+          font-size: 40px;
+        }
+
+        .topics-list {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+      }
+
+      .topic-section {
+        margin-bottom: 3rem;
+      }
+
+      .topic-section h2 {
+        font-size: 28px;
+        line-height: 1.14286;
+        font-weight: 600;
+        letter-spacing: 0.007em;
+        color: var(--apple-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      @media only screen and (max-width: 734px) {
+        .topic-section h2 {
+          font-size: 24px;
+        }
+      }
+
+      .topics-list li.completed {
+        background: #e8f5e9;
+      }
+
+      .lecture-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1.5rem;
+      }
+
+      .lecture-item a {
+        padding: 0;
+      }
+
+      .mark-button {
+        align-self: flex-end;
+        font-size: 14px;
+        padding: 4px 12px;
+        border-radius: 980px;
+        border: none;
+        cursor: pointer;
+        background-color: transparent;
+        color: var(--apple-dark);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .mark-button:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .mark-button svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .topics-list li.completed .mark-button {
+        color: #43a047;
+      }
+
+      .progress-info {
+        font-size: 17px;
+        color: var(--apple-gray);
+        margin-bottom: 2rem;
+      }
+
+      .header-actions {
+        margin-bottom: 3rem;
+        display: flex;
+        gap: 1rem;
+      }
+
+      .header-button {
+        font-size: 17px;
+        padding: 8px 16px;
+        border-radius: 980px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .header-button.primary {
+        background-color: #0066cc;
+        color: white;
+      }
+
+      .header-button.primary:hover {
+        background-color: #0055aa;
+      }
+
+      .header-button.secondary {
+        background-color: var(--apple-light-gray);
+        color: var(--apple-dark);
+      }
+
+      .header-button.secondary:hover {
+        background-color: #e5e5e5;
+      }
+
+      @media only screen and (max-width: 734px) {
+        .header-actions {
+          flex-direction: column;
+          margin-bottom: 2rem;
+        }
+
+        .header-button {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navigation">
+      <h1>mini lectures: from transistor to browser</h1>
+
+      <div class="progress-info">
+        <span id="progress-counter">0</span> of 50 lectures read (stored in local storage)
+      </div>
+
+      <div class="header-actions">
+        <a href="https://forms.gle/jJhkcfLAR8d4YxK39" class="header-button primary" target="_blank" rel="noopener">
+          Sign up to keep up to date
+        </a>
+        <a href="mailto:kevreuss@gmail.com" class="header-button secondary">
+          Feedback & ideas? Contact me
+        </a>
+      </div>
+
+      <section class="topic-section">
+        <ul class="topics-list">
+                    <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-audio-components/index.html">Introduction to Audio Components</a>
+              <button class="mark-button" data-lecture-id="1">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-environmental-sensors/index.html">Introduction to Environmental Sensors</a>
+              <button class="mark-button" data-lecture-id="2">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-iot-connecting-devices/index.html">Introduction to IoT: Connecting Devices</a>
+              <button class="mark-button" data-lecture-id="3">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/battery-types-and-safe-usage/index.html">Battery Types and Safe Usage</a>
+              <button class="mark-button" data-lecture-id="4">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-microcontrollers-arduino-and-esp32/index.html">Introduction to Microcontrollers: Arduino and ESP32</a>
+              <button class="mark-button" data-lecture-id="5">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/pwm-pulse-width-modulation-for-motor-control/index.html">PWM: Pulse Width Modulation for Motor Control</a>
+              <button class="mark-button" data-lecture-id="6">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-3d-printing-for-electronics-projects/index.html">Introduction to 3D Printing for Electronics Projects</a>
+              <button class="mark-button" data-lecture-id="7">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-machine-learning-for-embedded-systems/index.html">Introduction to Machine Learning for Embedded Systems</a>
+              <button class="mark-button" data-lecture-id="8">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/essential-electronic-components-resistors-capacitors-diodes/index.html">Essential Electronic Components: Resistors, Capacitors, Diodes</a>
+              <button class="mark-button" data-lecture-id="9">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-remote-control-systems/index.html">Introduction to Remote Control Systems</a>
+              <button class="mark-button" data-lecture-id="10">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-signal-conditioning/index.html">Introduction to Signal Conditioning</a>
+              <button class="mark-button" data-lecture-id="11">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/using-multimeters-for-basic-measurements/index.html">Using Multimeters for Basic Measurements</a>
+              <button class="mark-button" data-lecture-id="12">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/understanding-circuit-schematics-and-symbols/index.html">Understanding Circuit Schematics and Symbols</a>
+              <button class="mark-button" data-lecture-id="13">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-smart-sensors/index.html">Introduction to Smart Sensors</a>
+              <button class="mark-button" data-lecture-id="14">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/power-supply-basics-ac-dc-adapters-and-converters/index.html">Power Supply Basics: AC-DC, Adapters, and Converters</a>
+              <button class="mark-button" data-lecture-id="15">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/understanding-connectors-and-cables/index.html">Understanding Connectors and Cables</a>
+              <button class="mark-button" data-lecture-id="16">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/basic-safety-practices-in-electronics/index.html">Basic Safety Practices in Electronics</a>
+              <button class="mark-button" data-lecture-id="17">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-power-management/index.html">Introduction to Power Management</a>
+              <button class="mark-button" data-lecture-id="18">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/wireless-communication-basics-bluetooth-and-wi-fi/index.html">Wireless Communication Basics: Bluetooth and Wi-Fi</a>
+              <button class="mark-button" data-lecture-id="19">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-breadboarding-and-prototyping/index.html">Introduction to Breadboarding and Prototyping</a>
+              <button class="mark-button" data-lecture-id="20">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-low-power-design/index.html">Introduction to Low-Power Design</a>
+              <button class="mark-button" data-lecture-id="21">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-gps-and-navigation-modules/index.html">Introduction to GPS and Navigation Modules</a>
+              <button class="mark-button" data-lecture-id="22">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-robotics-building-simple-systems/index.html">Introduction to Robotics: Building Simple Systems</a>
+              <button class="mark-button" data-lecture-id="23">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/leds-types-applications-and-control/index.html">LEDs: Types, Applications, and Control</a>
+              <button class="mark-button" data-lecture-id="24">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/basics-of-electricity-voltage-current-and-resistance/index.html">Basics of Electricity: Voltage, Current, and Resistance</a>
+              <button class="mark-button" data-lecture-id="25">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-soldering-techniques/index.html">Introduction to Soldering Techniques</a>
+              <button class="mark-button" data-lecture-id="26">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-circuit-simulation-tools/index.html">Introduction to Circuit Simulation Tools</a>
+              <button class="mark-button" data-lecture-id="27">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/sensors-types-and-integration/index.html">Sensors: Types and Integration</a>
+              <button class="mark-button" data-lecture-id="28">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-rfid-and-nfc-modules/index.html">Introduction to RFID and NFC Modules</a>
+              <button class="mark-button" data-lecture-id="29">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/transistors-basics-and-applications/index.html">Transistors: Basics and Applications</a>
+              <button class="mark-button" data-lecture-id="30">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-home-automation-basics/index.html">Introduction to Home Automation Basics</a>
+              <button class="mark-button" data-lecture-id="31">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/battery-management-and-charging-circuits/index.html">Battery Management and Charging Circuits</a>
+              <button class="mark-button" data-lecture-id="32">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-displays-lcds-and-oleds/index.html">Introduction to Displays: LCDs and OLEDs</a>
+              <button class="mark-button" data-lecture-id="33">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/switches-and-buttons-types-and-applications/index.html">Switches and Buttons: Types and Applications</a>
+              <button class="mark-button" data-lecture-id="34">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/relays-and-optocouplers-basics-and-usage/index.html">Relays and Optocouplers: Basics and Usage</a>
+              <button class="mark-button" data-lecture-id="35">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-wearable-electronics/index.html">Introduction to Wearable Electronics</a>
+              <button class="mark-button" data-lecture-id="36">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/servo-motors-basics-and-control/index.html">Servo Motors: Basics and Control</a>
+              <button class="mark-button" data-lecture-id="37">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/motor-drivers-and-h-bridges/index.html">Motor Drivers and H-Bridges</a>
+              <button class="mark-button" data-lecture-id="38">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-energy-harvesting/index.html">Introduction to Energy Harvesting</a>
+              <button class="mark-button" data-lecture-id="39">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/dc-motors-basics-and-control/index.html">DC Motors: Basics and Control</a>
+              <button class="mark-button" data-lecture-id="40">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/stepper-motors-basics-and-control/index.html">Stepper Motors: Basics and Control</a>
+              <button class="mark-button" data-lecture-id="41">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-gesture-control-systems/index.html">Introduction to Gesture Control Systems</a>
+              <button class="mark-button" data-lecture-id="42">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-solar-power-for-projects/index.html">Introduction to Solar Power for Projects</a>
+              <button class="mark-button" data-lecture-id="43">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-voice-control-systems/index.html">Introduction to Voice Control Systems</a>
+              <button class="mark-button" data-lecture-id="44">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-embedded-systems-programming/index.html">Introduction to Embedded Systems Programming</a>
+              <button class="mark-button" data-lecture-id="45">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-computer-vision-for-makers/index.html">Introduction to Computer Vision for Makers</a>
+              <button class="mark-button" data-lecture-id="46">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/using-prefabricated-pcbs-and-shields/index.html">Using Prefabricated PCBs and Shields</a>
+              <button class="mark-button" data-lecture-id="47">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+          <li>
+            <div class="lecture-item">
+              <a href="material/introduction-to-actuators-solenoids-and-servos/index.html">Introduction to Actuators: Solenoids and Servos</a>
+              <button class="mark-button" data-lecture-id="48">
+                <svg class="check-icon" viewBox="0 0 24 24" style="display: none">
+                  <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+                <svg class="plus-icon" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                </svg>
+                <span class="button-text">Mark as read</span>
+              </button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <script>
+      // Initialize localStorage if needed
+      if (!localStorage.getItem("completedLectures-electronics-for-makers")) {
+        localStorage.setItem("completedLectures-electronics-for-makers", JSON.stringify([]));
+      }
+
+      function updateUI() {
+        const completedLectures = JSON.parse(
+          localStorage.getItem("completedLectures-electronics-for-makers")
+        );
+        const progressCounter = document.getElementById("progress-counter");
+        progressCounter.textContent = completedLectures.length;
+
+        document.querySelectorAll(".mark-button").forEach((button) => {
+          const lectureId = button.dataset.lectureId;
+          const listItem = button.closest("li");
+          const checkIcon = button.querySelector(".check-icon");
+          const plusIcon = button.querySelector(".plus-icon");
+          const buttonText = button.querySelector(".button-text");
+
+          if (completedLectures.includes(lectureId)) {
+            buttonText.textContent = "Mark as unread";
+            checkIcon.style.display = "block";
+            plusIcon.style.display = "none";
+            listItem.classList.add("completed");
+          } else {
+            buttonText.textContent = "Mark as read";
+            checkIcon.style.display = "none";
+            plusIcon.style.display = "block";
+            listItem.classList.remove("completed");
+          }
+        });
+      }
+
+      // Add click handlers to all buttons
+      document.querySelectorAll(".mark-button").forEach((button) => {
+        button.addEventListener("click", (e) => {
+          e.preventDefault();
+          const lectureId = button.dataset.lectureId;
+          const completedLectures = JSON.parse(
+            localStorage.getItem("completedLectures-electronics-for-makers")
+          );
+
+          if (completedLectures.includes(lectureId)) {
+            // Remove from completed
+            const index = completedLectures.indexOf(lectureId);
+            completedLectures.splice(index, 1);
+          } else {
+            // Add to completed
+            completedLectures.push(lectureId);
+          }
+
+          localStorage.setItem(
+            "completedLectures-electronics-for-makers",
+            JSON.stringify(completedLectures)
+          );
+          updateUI();
+        });
+      });
+
+      // Initial UI update
+      updateUI();
+    </script>
+  </body>
+</html>

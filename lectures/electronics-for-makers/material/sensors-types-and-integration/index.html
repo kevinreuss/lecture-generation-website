@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sensors: Types and Integration</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Sensors: Types and Integration
+
+## Types of Sensors
+
+There are numerous types of sensors, each designed for a specific purpose. Here we will focus on three common types used in software engineering:
+
+1. **Temperature Sensors**: These are used to measure the amount of heat energy that allows us to perceive how hot or cold something is. An example is the DS18B20 digital temperature sensor which operates on the 1-Wire bus.
+
+2. **Proximity Sensors**: These are used to detect the presence or absence of objects using electromagnetic fields, light, and sound. A popular example is the HC-SR04 ultrasonic distance sensor.
+
+3. **Motion Sensors**: These are used to detect physical movement in a given area. An example is the PIR (Passive Infrared) motion sensor.
+
+## Integration of Sensors
+
+The integration of sensors involves connecting them to a microcontroller or microprocessor to interpret the sensor data. The steps generally involve:
+
+1. **Connecting the Sensor**: This typically involves understanding the sensor's pin configuration and connecting it to the appropriate GPIO pins on the microcontroller.
+
+2. **Programming the Microcontroller**: This involves writing code that will read the data from the sensor and perform some action based on the sensor data.
+
+Here is an example of how you might connect a DS18B20 temperature sensor to a Raspberry Pi and write a Python program to read the temperature data:
+
+```python
+import os
+import glob
+import time
+
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
+
+base_dir = '/sys/bus/w1/devices/'
+device_folder = glob.glob(base_dir + '28*')[0]
+device_file = device_folder + '/w1_slave'
+
+def read_temp_raw():
+    f = open(device_file, 'r')
+    lines = f.readlines()
+    f.close()
+    return lines
+
+def read_temp():
+    lines = read_temp_raw()
+    while lines[0].strip()[-3:] != 'YES':
+        time.sleep(0.2)
+        lines = read_temp_raw()
+    equals_pos = lines[1].find('t=')
+    if equals_pos != -1:
+        temp_string = lines[1][equals_pos+2:]
+        temp_c = float(temp_string) / 1000.0
+        return temp_c
+
+while True:
+    print(read_temp())
+    time.sleep(1)
+```
+
+This Python script continuously reads the temperature from the DS18B20 sensor and prints it out. It accesses the sensor data through the Raspberry Pi's 1-Wire interface, which is exposed via the Linux filesystem at `/sys/bus/w1/devices/`.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

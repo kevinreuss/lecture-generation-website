@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to Environmental Sensors</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Introduction to Environmental Sensors
+
+Environmental sensors are essential tools for data collection in various fields. They can measure physical properties like temperature, humidity, pressure, light intensity, sound intensity, gas concentration, pH level, and many more. 
+
+## Types of Environmental Sensors
+
+### Temperature Sensors
+These measure the degree of hotness or coldness in an environment. Common types include thermocouples, resistance temperature detectors (RTDs), and thermistors. 
+
+### Humidity Sensors
+These measure the water vapor content in the air. They can be capacitive, resistive, or thermal, depending on the principle of operation.
+
+### Gas Sensors
+These detect the concentration of gases in an environment. They can be semiconductor gas sensors, electrochemical gas sensors, optical gas sensors, etc.
+
+## Interfacing with Microcontrollers
+
+Sensors often interact with microcontrollers to automate data collection and processing. Here is an example of how a temperature sensor (DS18B20) interfaces with an Arduino microcontroller.
+
+```C++
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+#define ONE_WIRE_BUS 2
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+
+void setup(void)
+{
+  Serial.begin(9600);
+  sensors.begin();
+}
+
+void loop(void)
+{ 
+  sensors.requestTemperatures();
+  Serial.print("Temperature is: ");
+  Serial.println(sensors.getTempCByIndex(0)); 
+}
+```
+In this code, the DS18B20 temperature sensor is connected to pin 2 of the Arduino. The `DallasTemperature` and `OneWire` libraries are used to communicate with the sensor. The `requestTemperatures()` function is called to measure the temperature, and `getTempCByIndex(0)` is used to get the temperature value, which is then printed to the serial monitor.
+
+## Sensor Data Processing
+
+Data from environmental sensors can be processed locally or sent to a cloud server for further analysis. Cloud platforms like AWS, Azure, or Google Cloud provide services for data ingestion, storage, processing, and visualization, allowing for more advanced analytics and machine learning applications.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Power Supply Basics: AC-DC, Adapters, and Converters</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Power Supply Basics: AC/DC, Adapters, and Converters
+
+## AC/DC
+
+Alternating Current (AC) and Direct Current (DC) are two basic types of electric current. AC periodically changes its direction while DC flows consistently in one direction. For instance, household outlets supply AC power, while batteries provide DC power.
+
+## Adapters
+
+An adapter is a device used to convert one type of electrical signal into another. For example, an AC adapter converts the AC from your wall outlet into a DC that can be used by your laptop, smartphone, or other electronic devices.
+
+```python
+class Adapter:
+    def __init__(self, input_type):
+        self.input_type = input_type
+
+    def convert(self, output_type):
+        # Conversion process here
+        return converted_output
+```
+Above, we have a simple Python class modeling an adapter converting input into desired output.
+
+## Converters
+
+Converters are devices that convert electrical energy from one form to another. Common types include AC-to-DC, DC-to-DC, and DC-to-AC converters. Converters find applications in numerous electronic devices, from power supplies to motor drives.
+
+```python
+class Converter:
+    def __init__(self, input_energy):
+        self.input_energy = input_energy
+
+    def convert(self, desired_form):
+        # Conversion process here
+        return converted_energy
+```
+In the Python class above, a converter is modeled that takes input energy and converts it into a desired form.
+
+In conclusion, understanding power supply basics is vital for software engineers working closely with hardware. These elements constitute the fundamental building blocks of powering and operating electronic devices.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

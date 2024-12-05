@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to Signal Conditioning</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Introduction to Signal Conditioning
+
+Signal conditioning refers to the process of modifying a signal in a way that it can be properly read by other devices or sensors. It involves various techniques such as filtering, amplifying, linearizing, and converting that help in preparing a signal to be processed.
+
+## Amplification
+
+Amplification is a crucial aspect of signal conditioning. It's the process of increasing the magnitude of the signal making it suitable for further processing. For example, a thermocouple produces a very low voltage which would be difficult to measure directly. We can use an amplifier to increase the voltage level.
+
+## Filtering
+
+Not all parts of a signal may be useful. Filtering helps remove unwanted frequencies from the signal. For example, a low-pass filter can be used to remove high-frequency noise from a signal.
+
+## Linearization
+
+Some sensors produce non-linear output. Linearization is the process of converting this non-linear output into a linear form. This simplifies further processing and analysis of the signal.
+
+## Conversion
+
+Signals may need to be converted from one form to another for various reasons, such as compatibility with other equipment or processing requirements. The most common conversion is Analog-to-Digital (ADC) and Digital-to-Analog (DAC).
+
+ADC example using Arduino:
+
+```c++
+// Define input analog pin
+const int analogInPin = A0;  
+
+void setup() {
+  // Begin serial communication at 9600 baud
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Read the analog value of the pin
+  int sensorValue = analogRead(analogInPin);  
+
+  // Print the value to the serial monitor
+  Serial.println(sensorValue);
+
+  // Wait for 1 second to see the changes
+  delay(1000);                      
+}
+```
+
+In this example, the Arduino reads the analog input and converts it into a digital value which is then printed out to the serial monitor.
+
+Remember, signal conditioning is vital to ensure our signals are prepared correctly for further processing or transmission. It enables efficient and accurate data extraction from complex or noisy signals.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

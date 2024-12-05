@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding Circuit Schematics and Symbols</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Understanding Circuit Schematics and Symbols
+
+Circuit schematics, or diagrams, are graphical representations of electronic circuits. They use symbols to represent different components and lines to represent the connections between them. 
+
+For instance, resistors are often depicted as a jagged line, while capacitors may be shown as two parallel lines. It's critical to understand these symbols to read and design circuit schematics.
+
+Here are some common symbols:
+
+- **Resistor (R)**: Represented as a zig-zag line. Its job is to resist current flow and lower voltage levels within circuits.
+
+- **Capacitor (C)**: Depicted as two parallel lines, it stores electrical energy.
+
+- **Inductor (L)**: Drawn as a looped line or a series of curved bumps. It's used to store energy in a magnetic field when electric current flows through it.
+
+- **Transistor (Q)**: Three-line symbol with a circle around it. Transistors can amplify or switch electronic signals and electrical power.
+
+- **Diode (D)**: A triangle pointing towards a line. It allows current to pass in one direction.
+
+- **Integrated Circuit (IC)**: A rectangle with multiple leads. These are complex circuits that have been miniaturized to fit into a small chip.
+
+- **Ground (GND)**: A series of decreasing lines. It represents the reference point in an electrical circuit from which voltages are measured.
+
+- **Battery (BAT)**: A series of alternating long and short lines. Represents a direct current voltage source.
+
+- **Operational Amplifier (OP-AMP)**: Represented by a triangle with 5 connections: inverting input, non-inverting input, output, and two power inputs.
+
+These symbols are interconnected with lines, representing wires or traces. The intersection of lines represents a direct connection between components. 
+
+Consider the following example circuit:
+
+```
+   |---R1---|
+--|         |
+  |---C1---|
+```
+
+This is a simple parallel RC circuit. The resistor `R1` and the capacitor `C1` are connected in parallel to each other.
+
+Understanding the meaning of these symbols and how they are connected will allow you to comprehend and construct complex circuit schematics.
+
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>

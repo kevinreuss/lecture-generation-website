@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Introduction to Microcontrollers: Arduino and ESP32</title>
+    <!-- Markdown Parser -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Code Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <style>
+      .markdown-content {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+      }
+      pre code {
+        border-radius: 4px;
+        padding: 1em;
+        background-color: #f6f8fa;
+        display: block;
+        overflow-x: auto;
+      }
+      h1, h2, h3 {
+        color: #24292e;
+        margin-top: 24px;
+        margin-bottom: 16px;
+      }
+      a {
+        color: #0366d6;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      #markdown-content {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="markdown-content"></div>
+    <!-- Markdown Content -->
+    <textarea id="markdown-content">
+# Introduction to Microcontrollers: Arduino and ESP32
+
+Microcontrollers are compact integrated circuits designed to perform specific operations in an embedded system. Two popular microcontrollers are the Arduino and the ESP32.
+
+## Arduino
+
+Arduino is an open-source electronics platform based on easy-to-use hardware and software. Arduino boards can read inputs - light on a sensor, a finger on a button, or a Twitter message - and turn it into an output - activating a motor, turning on an LED, publishing something online.
+
+Arduinos run on a language that is a set of C/C++ functions. All standard Arduino functions like digitalRead, digitalWrite, Serial.begin, delay, etc. are available.
+
+```C++
+int ledPin = 13;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(ledPin, HIGH);
+  delay(1000);
+  digitalWrite(ledPin, LOW);
+  delay(1000);
+}
+```
+This simple program blinks an LED connected to pin 13 of the Arduino board every second.
+
+## ESP32
+
+The ESP32 is a series of low-cost, low-power microcontrollers with integrated Wi-Fi and dual-mode Bluetooth. The ESP32 series is created and developed by Espressif Systems, a Shanghai-based Chinese company.
+
+ESP32 can be programmed with different software environments like ESP-IDF, Arduino IDE, MicroPython, Python, Lua, JavaScript, etc. Here is an example of an ESP32 code snippet that connects to a Wi-Fi network:
+
+```C++
+#include <WiFi.h>
+
+const char* ssid = "your_SSID";
+const char* password = "your_PASSWORD";
+
+void setup() {
+  Serial.begin(115200);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi...");
+  }
+  
+  Serial.println("Connected to WiFi");
+}
+
+void loop() {}
+```
+This program tries to connect to a specified Wi-Fi network and prints a message on the serial monitor once the connection is successful.
+
+Remember, both Arduino and ESP32 are versatile microcontrollers with a large supportive community, making them ideal for both beginners and professionals.
+    </textarea>
+    <!-- Main Script -->
+    <script>
+      const markdown = document.getElementById("markdown-content").value;
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: true,
+        highlight: function (code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, { language: lang }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        },
+      });
+      document.getElementById("content").innerHTML = marked.parse(markdown);
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
